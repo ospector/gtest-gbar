@@ -13,7 +13,6 @@ namespace Guitar
 {
     public partial class GuitarForm : Form
     {
-        int numTests;
         List<string> Failures=new List<string>();
         Regex r=new Regex(".*\\\\([^\\\\]+\\.cpp\\([0-9]+\\)):.*");
 
