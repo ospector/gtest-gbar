@@ -30,6 +30,8 @@ I didn't want to bother writing several plug-in's. Actually I sisn;t even want t
 Note 1: the test executable should (of course) be a google test executable. The application parses google test stdout.
 
 Note 2:The application remembers the last executable run between sessions.
+== I cant open SLN/Proj files ==
+You are probably on an older VS version. Don't worry - project is dead simple. Just roll up your own and add all files.
 
 
 Enjoy.
