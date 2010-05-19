@@ -13,8 +13,8 @@ This project is a standalone .Net 2.0 executable which displays a UI for a Googl
   # A list of all failures and their details upon click
 
 = Installation =
-# Download the ZIP
-# Open it somewhere other than "Program Files"
+  # Download the ZIP
+  # Open it somewhere other than "Program Files"
 If you insist on "Program Files", then you will need to run this with Administrative rights. 
 
 = FAQ =
