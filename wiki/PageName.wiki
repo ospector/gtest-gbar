@@ -1,4 +1,5 @@
-#summary One-sentence summary of this page.
+#summary All you need to know about this mini project
+#labels Featured
 
 = Introduction =
 This project is an independent addition for [http://code.google.com/p/googletest/ googletest].
@@ -12,7 +13,9 @@ This project is a standalone .Net 2.0 executable which displays a UI for a Googl
   # A list of all failures and their details upon click
 
 = Installation =
-TBD
+# Download the ZIP
+# Open it somewhere other than "Program Files"
+If you insist on "Program Files", then you will need to run this with Administrative rights. 
 
 = FAQ =
 == Why isn't this a plug-in for my favorite IDE ==
@@ -22,6 +25,10 @@ I didn't want to bother writing several plug-in's. Actually I sisn;t even want t
   # Run the app (called "Guitar" - you can work out the acronym)
   # In app main dialog select your test executable
   # Press "Go" whenever your tests/code compile (TDDers, note the order ;-) )
+
+
+Note:The application remembers the last executable run between sessions.
+
 
 Enjoy.
 
