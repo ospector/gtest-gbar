@@ -1,0 +1,28 @@
+#summary One-sentence summary of this page.
+
+= Introduction =
+This project is an independent addition for [http://code.google.com/p/googletest/ googletest].
+
+ 
+Google Test is an excellent xUnit style c++ unit testing framework. It is highly recommended. One (minor) drawback of Google Test is it's text based UI, and this project attempts to help.
+
+= Deliverables =
+This project is a standalone .Net 2.0 executable which displays a UI for a Google Test based harness with the following elements:
+  # A progress bar which is either green or red, according to test success
+  # A list of all failures and their details upon click
+
+= Installation =
+TBD
+
+= FAQ =
+== Why isn't this a plug-in for my favorite IDE ==
+I didn't want to bother writing several plug-in's. Actually I sisn;t even want to write one. I find that a standalone app that I run constantly as I code is very convenient, and I am not limited to VS 2005/2008/2010, Eclipse, etc.
+== So how do you recommend I use this ==
+  # Fire up your IDE
+  # Run the app (called "Guitar" - you can work out the acronym)
+  # In app main dialog select your test executable
+  # Press "Go" whenever your tests/code compile (TDDers, note the order ;-) )
+
+Enjoy.
+
+Omri.
