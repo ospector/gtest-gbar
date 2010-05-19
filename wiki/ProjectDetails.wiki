@@ -12,6 +12,8 @@ This project is a standalone .Net 2.0 executable which displays a UI for a Googl
   # A progress bar which is either green or red, according to test success
   # A list of all failures and their details upon click
 
+Here are some [ScreenShots].
+
 = Installation =
   # Download the ZIP
   # Open it somewhere other than "Program Files"
@@ -25,9 +27,9 @@ I didn't want to bother writing several plug-in's. Actually I sisn;t even want t
   # Run the app (called "Guitar" - you can work out the acronym)
   # In app main dialog select your test executable
   # Press "Go" whenever your tests/code compile (TDDers, note the order ;-) )
+Note 1: the test executable should (of course) be a google test executable. The application parses google test stdout.
 
-
-Note:The application remembers the last executable run between sessions.
+Note 2:The application remembers the last executable run between sessions.
 
 
 Enjoy.
