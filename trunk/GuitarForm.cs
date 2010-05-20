@@ -8,6 +8,7 @@ using System.Windows.Forms;
 using System.Diagnostics;
 using System.Configuration;
 using System.Text.RegularExpressions;
+using System.IO;
 
 namespace Guitar
 {
@@ -15,41 +16,95 @@ namespace Guitar
     {
         List<string> Failures=new List<string>();
         Regex r=new Regex(".*\\\\([^\\\\]+\\.cpp\\([0-9]+\\)):.*");
+        private bool inWindows;
+        private int maxHistory = 5;
 
         public GuitarForm()
         {
+            inWindows = (System.Environment.OSVersion.Platform != System.PlatformID.Unix && System.Environment.OSVersion.Platform != System.PlatformID.MacOSX); 
             InitializeComponent();
+        }
+
+        private string buildArgs(bool onlyListTests)
+        {
+            StringBuilder cl = new StringBuilder();
+            cl.Append(clParams.Text);
+            if (onlyListTests) cl.Append("--gtest_list_tests ");
+            if (shouldShuffle.Checked) cl.Append(' ').Append("--gtest_shuffle");
+            if (shouldRunDisabled.Checked) cl.Append(' ').Append("--gtest_also_run_disabled_tests");
+            if (filter.Text.Trim().Length > 0)
+            {
+                cl.Append(" --gtest_filter=").Append(filter.Text.Trim());
+            }
+            return cl.ToString();
+        }
+
+        private StreamReader runGtest(bool onlyListTests)
+        {
+            Process gtestApp = new Process();
+            gtestApp.StartInfo.FileName = exeFilename.Text;
+            gtestApp.StartInfo.Arguments = buildArgs(onlyListTests);
+            gtestApp.StartInfo.UseShellExecute = false;
+            gtestApp.StartInfo.RedirectStandardOutput = true;
+            gtestApp.Start();
+            return gtestApp.StandardOutput;
         }
 
         private void goBtn_Click(object sender, EventArgs e)
         {
             saveSettings();
 
-            Process gtestApp = new Process();
-            gtestApp.StartInfo.FileName = exeFilename.Text;
-            gtestApp.StartInfo.UseShellExecute = false;
-            gtestApp.StartInfo.RedirectStandardOutput = true;
-            gtestApp.Start();
+            GoogleTestOutputParser parser = new GoogleTestOutputParser(this.advanceProgressBar,this.lineRead);
 
-            GoogleTestOutputParser parser = new GoogleTestOutputParser(this.calibrateProgressBar, this.advanceProgressBar);
-
-            String line;
-            while ((line = gtestApp.StandardOutput.ReadLine()) != null)
-            {
-                lineLabel.Text = line;
-                parser.submitLine(line);
-                this.Refresh();
-            }
+            calibrateProgressBar(parser.countTests(runGtest(true)));
+            parser.parseTests(runGtest(false));
 
             lineLabel.Text = "Done.";
             if (Failures.Count==0) errorScreen.Text = "All is well.";
+        }
+
+        private string manageHistoryCombo(ComboBox cb)
+        {
+            // Is this an old item selection or a new item
+            string selText = cb.Text;
+            Boolean isNew = (!selText.Equals((string)(cb.SelectedValue)));
+
+            if (isNew || cb.SelectedIndex > 0)
+            {
+                // remove older reference to same file
+                cb.Items.Remove(selText);
+
+                // add new file as highest item
+                cb.Items.Insert(0, selText);
+                cb.SelectedIndex = 0;
+            }
+
+            // Return setting string
+            StringBuilder builder = new StringBuilder();
+            int i = 0;
+            foreach (Object o in cb.Items)
+            {
+                string t = ((string)o).Trim();
+                if (t.Length > 0)
+                {
+                    builder.Append(t);
+                    if (i > 0) builder.Append("|");
+                    i++;
+                    if (i > maxHistory) break;
+                }
+            }
+
+            return builder.ToString();
+
         }
 
         private void saveSettings()
         {
             System.Configuration.Configuration config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
 
-            config.AppSettings.Settings["gtest"].Value = exeFilename.Text;
+            config.AppSettings.Settings["gtest"].Value = manageHistoryCombo(exeFilename);
+            config.AppSettings.Settings["gtest-params"].Value = manageHistoryCombo(clParams);
+            config.AppSettings.Settings["gtest-filters"].Value = manageHistoryCombo(filter);
             config.Save(ConfigurationSaveMode.Modified);
         }
 
@@ -65,6 +120,19 @@ namespace Guitar
             progressBar.Minimum = 0;
             progressBar.Maximum = n;
             progressBar.ProgressBarColor = Color.Green;
+        }
+
+        private void lineRead(string line,bool countStage)
+        {
+            if (countStage)
+            {
+                lineLabel.Text = "Counting..." + line;
+            }
+            else
+            {
+                lineLabel.Text = line;
+            }
+            this.Refresh();
         }
 
         private void advanceProgressBar(string error)
@@ -98,13 +166,34 @@ namespace Guitar
 
         private bool canRun()
         {
-            return (System.IO.File.Exists(exeFilename.Text) && exeFilename.Text.EndsWith("exe"));
+            bool ret=System.IO.File.Exists(exeFilename.Text);
+            
+            if (inWindows) {
+                ret=ret && (exeFilename.Text.TrimEnd().EndsWith("exe") || exeFilename.Text.TrimEnd().EndsWith("bat"));
+            }
+            return ret;
+            
+        }
+
+        private void loadCombo(ComboBox cb,string vals)
+        {
+            if (vals.Trim().Length > 0)
+            {
+                string[] arr = vals.Split('|');
+                foreach (string s in arr)
+                {
+                    cb.Items.Add(s);
+                }
+                cb.SelectedIndex = 0;
+            }
         }
 
         private void GuitarForm_Load(object sender, EventArgs e)
         {
-            exeFilename.Text = System.Configuration.ConfigurationManager.AppSettings["gtest"]; 
-
+            int maxHistory=int.Parse(System.Configuration.ConfigurationManager.AppSettings["maxHistory"]);
+            loadCombo(exeFilename,System.Configuration.ConfigurationManager.AppSettings["gtest"]);
+            loadCombo(clParams, System.Configuration.ConfigurationManager.AppSettings["gtest-params"]);
+            loadCombo(filter, System.Configuration.ConfigurationManager.AppSettings["gtest-filters"]);
             goBtn.Enabled = canRun();
 
         }
