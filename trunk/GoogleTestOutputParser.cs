@@ -1,46 +1,78 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.IO;
 
 namespace Guitar
 {
-    delegate void RegisterNumTests(int n);
     delegate void TestComplete(string error);
+    delegate void LineRead(string line,bool countOnly);
 
     class GoogleTestOutputParser
     {
 
-        private RegisterNumTests setNumTests;
         private TestComplete notifyTestComplete;
-
+        private LineRead notifyLineRead;
+        
         private string potentialErrorText;
-
-
-        public GoogleTestOutputParser(RegisterNumTests a, TestComplete b)
+        private int numTests=0;
+        private bool modeCountOnly;
+        
+        public GoogleTestOutputParser(TestComplete a,LineRead b)
         {
-            setNumTests = a;
-            notifyTestComplete = b;
+            notifyTestComplete = a;
+            notifyLineRead = b;
         }
 
-        public void submitLine(String l) {
-            if (l.StartsWith("[==========] Running"))
+        private void parseLine(String l) {
+            if (modeCountOnly)
             {
-                string num = l.Substring(21, l.IndexOf(' ', 21) - 21);
-                int numTests=Int32.Parse(num);
-                setNumTests(numTests);
-        } else if(l.StartsWith("[       OK ]")) {
-            notifyTestComplete(null);
-            potentialErrorText = "";
-        } else if(l.StartsWith("[  FAILED  ]") && l.EndsWith(")")) {
-            notifyTestComplete(potentialErrorText);
-            potentialErrorText = "";
-        }
-            else if (!l.StartsWith("["))
+                if (l.StartsWith("  ")) numTests++;
+            }
+            else
             {
-                potentialErrorText += l + "\r\n";
+                if (l.StartsWith("[       OK ]"))
+                {
+                    notifyTestComplete(null);
+                    potentialErrorText = "";
+                }
+                else if (l.StartsWith("[  FAILED  ]") && l.EndsWith(")"))
+                {
+                    notifyTestComplete(potentialErrorText);
+                    potentialErrorText = "";
+                }
+                else if (!l.StartsWith("["))
+                {
+                    potentialErrorText += l + "\r\n";
+                }
             }
 
     }
+
+        private void parseInputStream(StreamReader input)
+        {
+            String line;
+            while ((line = input.ReadLine()) != null)
+            {
+                notifyLineRead(line,modeCountOnly);
+                parseLine(line);
+            }
+        }
+
+        public int countTests(StreamReader input)
+        {
+            numTests = 0;
+            modeCountOnly = true;
+            parseInputStream(input);
+            return numTests;
+
+        }
+
+        public void parseTests(StreamReader input)
+        {
+            modeCountOnly = false;
+            parseInputStream(input);
+        }
     }
 
 }
