@@ -1,0 +1,16 @@
+#summary List of project versions
+= Version 1.2 =
+  * Support for "shuffle"
+  * Support for "force disabled tests"
+  * Support for test filtering
+  * Support for additional command line parameters
+  * History of previous runs allowing fast re-run
+  * Number of tests based on --list option
+  * Select executable dialog not limited to exe
+  * Go button requires .exe/.bat on windows only
+  * Removed uneeded System.Deployment reference (Was problematic in Mono)
+
+Version should work on Mono, but this was not tested yet.
+
+= Version 1.1 =
+First public version
