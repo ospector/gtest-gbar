@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -46,6 +46,7 @@ namespace Guitar
             gtestApp.StartInfo.Arguments = buildArgs(onlyListTests);
             gtestApp.StartInfo.UseShellExecute = false;
             gtestApp.StartInfo.RedirectStandardOutput = true;
+            gtestApp.StartInfo.CreateNoWindow = (onlyListTests||(!onlyListTests && hideConsole.Checked));
             gtestApp.Start();
             return gtestApp.StandardOutput;
         }
@@ -56,11 +57,20 @@ namespace Guitar
 
             GoogleTestOutputParser parser = new GoogleTestOutputParser(this.advanceProgressBar,this.lineRead);
 
+            cls();
             calibrateProgressBar(parser.countTests(runGtest(true)));
             parser.parseTests(runGtest(false));
 
             lineLabel.Text = "Done.";
             if (Failures.Count==0) errorScreen.Text = "All is well.";
+        }
+
+        private void cls()
+        {
+            progressBar.Value = 0;
+            failureListBox.Items.Clear();
+            errorScreen.Text = "";
+            Refresh();
         }
 
         private string manageHistoryCombo(ComboBox cb)
@@ -72,14 +82,14 @@ namespace Guitar
             if (isNew || cb.SelectedIndex > 0)
             {
                 // remove older reference to same file
-                cb.Items.Remove(selText);
+                 if (cb.SelectedIndex >= 0) cb.Items.Remove(selText);
 
                 // add new file as highest item
                 cb.Items.Insert(0, selText);
                 cb.SelectedIndex = 0;
             }
 
-            // Return setting string
+            // Return setting string, limited to history length.
             StringBuilder builder = new StringBuilder();
             int i = 0;
             foreach (Object o in cb.Items)
@@ -110,7 +120,6 @@ namespace Guitar
 
         private void calibrateProgressBar(int n)
         {
-            int numTests=n;
             Failures.Clear();
             numTestsLabel.Text=""+n;
             numFailuresLabel.Text="0";
@@ -126,13 +135,13 @@ namespace Guitar
         {
             if (countStage)
             {
-                lineLabel.Text = "Counting..." + line;
+                lineLabel.Text = "Counting tests..." + line;
             }
             else
             {
                 lineLabel.Text = line;
             }
-            this.Refresh();
+            lineLabel.Refresh();
         }
 
         private void advanceProgressBar(string error)
@@ -145,9 +154,11 @@ namespace Guitar
                 Match mc=r.Match(error);
                 failureListBox.Items.Add(mc.Groups[1]);
                 failureListBox.SelectedIndex = 0;
+                failureListBox.Refresh();
             }
 
             progressBar.Value++;
+            progressBar.Refresh();
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -190,7 +201,7 @@ namespace Guitar
 
         private void GuitarForm_Load(object sender, EventArgs e)
         {
-            int maxHistory=int.Parse(System.Configuration.ConfigurationManager.AppSettings["maxHistory"]);
+            maxHistory=int.Parse(System.Configuration.ConfigurationManager.AppSettings["maxHistory"]);
             loadCombo(exeFilename,System.Configuration.ConfigurationManager.AppSettings["gtest"]);
             loadCombo(clParams, System.Configuration.ConfigurationManager.AppSettings["gtest-params"]);
             loadCombo(filter, System.Configuration.ConfigurationManager.AppSettings["gtest-filters"]);
