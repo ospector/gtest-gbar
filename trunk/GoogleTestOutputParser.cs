@@ -2,14 +2,20 @@
 using System.Collections.Generic;
 using System.Text;
 using System.IO;
+using System.Text.RegularExpressions;
 
 namespace Guitar
 {
     delegate void TestComplete(string error);
     delegate void LineRead(string line,bool countOnly);
 
+
+
     class GoogleTestOutputParser
     {
+
+        private string currentTestName;
+        private static Regex TEST_START = new Regex(@"\[ RUN      ] ([\w/]+\.[\w/]+)");
 
         private TestComplete notifyTestComplete;
         private LineRead notifyLineRead;
@@ -31,19 +37,27 @@ namespace Guitar
             }
             else
             {
-                if (l.StartsWith("[       OK ]"))
+                if (TEST_START.IsMatch(l))
                 {
-                    notifyTestComplete(null);
+                    currentTestName = TEST_START.Match(l).Groups[1].Value;
                     potentialErrorText = "";
                 }
-                else if (l.StartsWith("[  FAILED  ]") && l.EndsWith(")"))
+                else if (currentTestName != null)
                 {
-                    notifyTestComplete(potentialErrorText);
-                    potentialErrorText = "";
-                }
-                else if (!l.StartsWith("["))
-                {
-                    potentialErrorText += l + "\r\n";
+                    if (l.StartsWith("[       OK ] " + currentTestName))
+                    {
+                        notifyTestComplete(null);
+                        currentTestName = null;
+                    }
+                    else if (l.StartsWith("[  FAILED  ] " + currentTestName))
+                    {
+                        notifyTestComplete(potentialErrorText);
+                        currentTestName = null;
+                    }
+                    else if (!l.StartsWith("["))
+                    {
+                        potentialErrorText += l + "\r\n";
+                    }
                 }
             }
 
