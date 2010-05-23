@@ -48,6 +48,7 @@
             this.label5 = new System.Windows.Forms.Label();
             this.filter = new System.Windows.Forms.ComboBox();
             this.progressBar = new ColorProgressBar.ColorProgressBar();
+            this.hideConsole = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // openFileDialog1
@@ -65,7 +66,7 @@
             this.errorScreen.Multiline = true;
             this.errorScreen.Name = "errorScreen";
             this.errorScreen.Size = new System.Drawing.Size(451, 152);
-            this.errorScreen.TabIndex = 10;
+            this.errorScreen.TabIndex = 9;
             // 
             // numFailuresLabel
             // 
@@ -111,7 +112,7 @@
             this.goBtn.Location = new System.Drawing.Point(283, 382);
             this.goBtn.Name = "goBtn";
             this.goBtn.Size = new System.Drawing.Size(75, 23);
-            this.goBtn.TabIndex = 8;
+            this.goBtn.TabIndex = 7;
             this.goBtn.Text = "Go";
             this.goBtn.UseVisualStyleBackColor = true;
             this.goBtn.Click += new System.EventHandler(this.goBtn_Click);
@@ -154,7 +155,7 @@
             this.failureListBox.Location = new System.Drawing.Point(12, 215);
             this.failureListBox.Name = "failureListBox";
             this.failureListBox.Size = new System.Drawing.Size(151, 147);
-            this.failureListBox.TabIndex = 9;
+            this.failureListBox.TabIndex = 8;
             this.failureListBox.SelectedIndexChanged += new System.EventHandler(this.failureListBox_SelectedIndexChanged);
             // 
             // exeFilename
@@ -228,7 +229,7 @@
             this.filter.Location = new System.Drawing.Point(125, 59);
             this.filter.Name = "filter";
             this.filter.Size = new System.Drawing.Size(423, 21);
-            this.filter.TabIndex = 5;
+            this.filter.TabIndex = 6;
             // 
             // progressBar
             // 
@@ -243,11 +244,25 @@
             this.progressBar.TabIndex = 3;
             this.progressBar.Value = 0;
             // 
+            // hideConsole
+            // 
+            this.hideConsole.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.hideConsole.AutoSize = true;
+            this.hideConsole.Checked = true;
+            this.hideConsole.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.hideConsole.Location = new System.Drawing.Point(542, 37);
+            this.hideConsole.Name = "hideConsole";
+            this.hideConsole.Size = new System.Drawing.Size(89, 17);
+            this.hideConsole.TabIndex = 5;
+            this.hideConsole.Text = "Hide Console";
+            this.hideConsole.UseVisualStyleBackColor = true;
+            // 
             // GuitarForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(643, 409);
+            this.Controls.Add(this.hideConsole);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.filter);
             this.Controls.Add(this.shouldRunDisabled);
@@ -296,6 +311,7 @@
         private System.Windows.Forms.CheckBox shouldRunDisabled;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.ComboBox filter;
+        private System.Windows.Forms.CheckBox hideConsole;
 
     }
 }
