@@ -3,7 +3,8 @@
 = Upcoming version 1.2.1 =
   # Show/hide console
   # Clears dialog before next run
-  # Better parsing of test output
+  # Cleaner parsing of test output
+  # More efficient refresh of screen
   # Tested and fixed Mono version
     # Fix to problem in combo management which leads to crashes
     # StreamReader issue (still under research)
