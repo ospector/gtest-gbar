@@ -47,8 +47,12 @@
             this.shouldRunDisabled = new System.Windows.Forms.CheckBox();
             this.label5 = new System.Windows.Forms.Label();
             this.filter = new System.Windows.Forms.ComboBox();
-            this.progressBar = new ColorProgressBar.ColorProgressBar();
             this.hideConsole = new System.Windows.Forms.CheckBox();
+            this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.progressBar = new ColorProgressBar.ColorProgressBar();
+            this.splitContainer1.Panel1.SuspendLayout();
+            this.splitContainer1.Panel2.SuspendLayout();
+            this.splitContainer1.SuspendLayout();
             this.SuspendLayout();
             // 
             // openFileDialog1
@@ -62,17 +66,17 @@
                         | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.errorScreen.Font = new System.Drawing.Font("Courier New", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.errorScreen.Location = new System.Drawing.Point(169, 213);
+            this.errorScreen.Location = new System.Drawing.Point(3, 0);
             this.errorScreen.Multiline = true;
             this.errorScreen.Name = "errorScreen";
-            this.errorScreen.Size = new System.Drawing.Size(451, 152);
+            this.errorScreen.Size = new System.Drawing.Size(520, 197);
             this.errorScreen.TabIndex = 9;
             // 
             // numFailuresLabel
             // 
             this.numFailuresLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.numFailuresLabel.AutoSize = true;
-            this.numFailuresLabel.Location = new System.Drawing.Point(606, 164);
+            this.numFailuresLabel.Location = new System.Drawing.Point(783, 164);
             this.numFailuresLabel.Name = "numFailuresLabel";
             this.numFailuresLabel.Size = new System.Drawing.Size(13, 13);
             this.numFailuresLabel.TabIndex = 5;
@@ -91,7 +95,7 @@
             // 
             this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(502, 164);
+            this.label2.Location = new System.Drawing.Point(679, 164);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(98, 13);
             this.label2.TabIndex = 4;
@@ -109,7 +113,7 @@
             // goBtn
             // 
             this.goBtn.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
-            this.goBtn.Location = new System.Drawing.Point(283, 382);
+            this.goBtn.Location = new System.Drawing.Point(372, 382);
             this.goBtn.Name = "goBtn";
             this.goBtn.Size = new System.Drawing.Size(75, 23);
             this.goBtn.TabIndex = 7;
@@ -124,7 +128,7 @@
             this.lineLabel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.lineLabel.Location = new System.Drawing.Point(9, 124);
             this.lineLabel.Name = "lineLabel";
-            this.lineLabel.Size = new System.Drawing.Size(610, 23);
+            this.lineLabel.Size = new System.Drawing.Size(787, 23);
             this.lineLabel.TabIndex = 2;
             // 
             // label3
@@ -139,7 +143,7 @@
             // button1
             // 
             this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.button1.Location = new System.Drawing.Point(554, 4);
+            this.button1.Location = new System.Drawing.Point(731, 4);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 23);
             this.button1.TabIndex = 1;
@@ -149,12 +153,13 @@
             // 
             // failureListBox
             // 
-            this.failureListBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)));
+            this.failureListBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.failureListBox.FormattingEnabled = true;
-            this.failureListBox.Location = new System.Drawing.Point(12, 215);
+            this.failureListBox.Location = new System.Drawing.Point(0, 0);
             this.failureListBox.Name = "failureListBox";
-            this.failureListBox.Size = new System.Drawing.Size(151, 147);
+            this.failureListBox.Size = new System.Drawing.Size(251, 199);
             this.failureListBox.TabIndex = 8;
             this.failureListBox.SelectedIndexChanged += new System.EventHandler(this.failureListBox_SelectedIndexChanged);
             // 
@@ -165,7 +170,7 @@
             this.exeFilename.FormattingEnabled = true;
             this.exeFilename.Location = new System.Drawing.Point(125, 6);
             this.exeFilename.Name = "exeFilename";
-            this.exeFilename.Size = new System.Drawing.Size(423, 21);
+            this.exeFilename.Size = new System.Drawing.Size(600, 21);
             this.exeFilename.TabIndex = 0;
             this.exeFilename.TextChanged += new System.EventHandler(this.exeFilename_TextChanged);
             // 
@@ -176,7 +181,7 @@
             this.clParams.FormattingEnabled = true;
             this.clParams.Location = new System.Drawing.Point(125, 33);
             this.clParams.Name = "clParams";
-            this.clParams.Size = new System.Drawing.Size(218, 21);
+            this.clParams.Size = new System.Drawing.Size(395, 21);
             this.clParams.TabIndex = 2;
             // 
             // label4
@@ -194,7 +199,7 @@
             this.shouldShuffle.AutoSize = true;
             this.shouldShuffle.Checked = true;
             this.shouldShuffle.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.shouldShuffle.Location = new System.Drawing.Point(360, 36);
+            this.shouldShuffle.Location = new System.Drawing.Point(537, 36);
             this.shouldShuffle.Name = "shouldShuffle";
             this.shouldShuffle.Size = new System.Drawing.Size(59, 17);
             this.shouldShuffle.TabIndex = 3;
@@ -205,7 +210,7 @@
             // 
             this.shouldRunDisabled.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.shouldRunDisabled.AutoSize = true;
-            this.shouldRunDisabled.Location = new System.Drawing.Point(425, 37);
+            this.shouldRunDisabled.Location = new System.Drawing.Point(602, 37);
             this.shouldRunDisabled.Name = "shouldRunDisabled";
             this.shouldRunDisabled.Size = new System.Drawing.Size(119, 17);
             this.shouldRunDisabled.TabIndex = 4;
@@ -228,8 +233,40 @@
             this.filter.FormattingEnabled = true;
             this.filter.Location = new System.Drawing.Point(125, 59);
             this.filter.Name = "filter";
-            this.filter.Size = new System.Drawing.Size(423, 21);
+            this.filter.Size = new System.Drawing.Size(600, 21);
             this.filter.TabIndex = 6;
+            // 
+            // hideConsole
+            // 
+            this.hideConsole.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.hideConsole.AutoSize = true;
+            this.hideConsole.Checked = true;
+            this.hideConsole.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.hideConsole.Location = new System.Drawing.Point(719, 37);
+            this.hideConsole.Name = "hideConsole";
+            this.hideConsole.Size = new System.Drawing.Size(89, 17);
+            this.hideConsole.TabIndex = 5;
+            this.hideConsole.Text = "Hide Console";
+            this.hideConsole.UseVisualStyleBackColor = true;
+            // 
+            // splitContainer1
+            // 
+            this.splitContainer1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.splitContainer1.Location = new System.Drawing.Point(12, 180);
+            this.splitContainer1.Name = "splitContainer1";
+            // 
+            // splitContainer1.Panel1
+            // 
+            this.splitContainer1.Panel1.Controls.Add(this.failureListBox);
+            // 
+            // splitContainer1.Panel2
+            // 
+            this.splitContainer1.Panel2.Controls.Add(this.errorScreen);
+            this.splitContainer1.Size = new System.Drawing.Size(784, 202);
+            this.splitContainer1.SplitterDistance = 254;
+            this.splitContainer1.TabIndex = 17;
             // 
             // progressBar
             // 
@@ -240,28 +277,16 @@
             this.progressBar.Minimum = 0;
             this.progressBar.Name = "progressBar";
             this.progressBar.ProgressBarColor = System.Drawing.Color.Blue;
-            this.progressBar.Size = new System.Drawing.Size(610, 24);
+            this.progressBar.Size = new System.Drawing.Size(787, 24);
             this.progressBar.TabIndex = 3;
             this.progressBar.Value = 0;
-            // 
-            // hideConsole
-            // 
-            this.hideConsole.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.hideConsole.AutoSize = true;
-            this.hideConsole.Checked = true;
-            this.hideConsole.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.hideConsole.Location = new System.Drawing.Point(542, 37);
-            this.hideConsole.Name = "hideConsole";
-            this.hideConsole.Size = new System.Drawing.Size(89, 17);
-            this.hideConsole.TabIndex = 5;
-            this.hideConsole.Text = "Hide Console";
-            this.hideConsole.UseVisualStyleBackColor = true;
             // 
             // GuitarForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(643, 409);
+            this.ClientSize = new System.Drawing.Size(820, 409);
+            this.Controls.Add(this.splitContainer1);
             this.Controls.Add(this.hideConsole);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.filter);
@@ -270,10 +295,8 @@
             this.Controls.Add(this.label4);
             this.Controls.Add(this.clParams);
             this.Controls.Add(this.exeFilename);
-            this.Controls.Add(this.failureListBox);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.label3);
-            this.Controls.Add(this.errorScreen);
             this.Controls.Add(this.numFailuresLabel);
             this.Controls.Add(this.progressBar);
             this.Controls.Add(this.numTestsLabel);
@@ -283,8 +306,12 @@
             this.Controls.Add(this.label1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "GuitarForm";
-            this.Text = "Guitar 1.2 - Google Unit Test Runner";
+            this.Text = "Guitar 1.2.1 - Google Unit Test Application Runner";
             this.Load += new System.EventHandler(this.GuitarForm_Load);
+            this.splitContainer1.Panel1.ResumeLayout(false);
+            this.splitContainer1.Panel2.ResumeLayout(false);
+            this.splitContainer1.Panel2.PerformLayout();
+            this.splitContainer1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -312,6 +339,9 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.ComboBox filter;
         private System.Windows.Forms.CheckBox hideConsole;
+        private System.Windows.Forms.SplitContainer splitContainer1;
+        private System.Windows.Forms.ListBox listBox1;
+        private System.Windows.Forms.TextBox textBox1;
 
     }
 }
