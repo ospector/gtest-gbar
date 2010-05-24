@@ -15,7 +15,6 @@ namespace Guitar
     public partial class GuitarForm : Form
     {
         List<string> Failures=new List<string>();
-        Regex r=new Regex(".*\\\\([^\\\\]+\\.cpp\\([0-9]+\\)):.*");
         private bool inWindows;
         private int maxHistory = 5;
 
@@ -54,15 +53,26 @@ namespace Guitar
         private void goBtn_Click(object sender, EventArgs e)
         {
             saveSettings();
+			cls();
 
             GoogleTestOutputParser parser = new GoogleTestOutputParser(this.advanceProgressBar,this.lineRead);
 
-            cls();
-            calibrateProgressBar(parser.countTests(runGtest(true)));
-            parser.parseTests(runGtest(false));
-
-            lineLabel.Text = "Done.";
-            if (Failures.Count==0) errorScreen.Text = "All is well.";
+			bool monoException=false;
+            try {
+				calibrateProgressBar(parser.countTests(runGtest(true)));
+                parser.parseTests(runGtest(false));
+			} catch (System.ObjectDisposedException ode) {
+				monoException=true;
+			}
+			if (monoException) {
+				cls();
+				errorScreen.Text="Please Retry, Failure during run due to StreamReader close\n(This is a known issue in Mono on Ubuntu.)";
+			} else {
+				int disabled=(progressBar.Maximum-progressBar.Value);
+                lineLabel.Text = "Done "+progressBar.Value+" of "+progressBar.Maximum+(disabled==0?". ":". "+disabled+" are disabled.");
+                if (Failures.Count==0) errorScreen.Text = "All is well.";
+			}
+			goBtn.Enabled = canRun();
         }
 
         private void cls()
@@ -70,7 +80,7 @@ namespace Guitar
             progressBar.Value = 0;
             failureListBox.Items.Clear();
             errorScreen.Text = "";
-            Refresh();
+            errorScreen.Refresh();
         }
 
         private string manageHistoryCombo(ComboBox cb)
@@ -82,7 +92,11 @@ namespace Guitar
             if (isNew || cb.SelectedIndex > 0)
             {
                 // remove older reference to same file
-                 if (cb.SelectedIndex >= 0) cb.Items.Remove(selText);
+				try {
+                   if (cb.SelectedIndex >= 0) cb.Items.Remove(selText);
+				} catch (Exception e) {
+					// silently ignore this inconsistency
+				}
 
                 // add new file as highest item
                 cb.Items.Insert(0, selText);
@@ -97,8 +111,8 @@ namespace Guitar
                 string t = ((string)o).Trim();
                 if (t.Length > 0)
                 {
-                    builder.Append(t);
                     if (i > 0) builder.Append("|");
+                    builder.Append(t);
                     i++;
                     if (i > maxHistory) break;
                 }
@@ -129,6 +143,9 @@ namespace Guitar
             progressBar.Minimum = 0;
             progressBar.Maximum = n;
             progressBar.ProgressBarColor = Color.Green;
+			
+			numTestsLabel.Refresh();
+			numFailuresLabel.Refresh();
         }
 
         private void lineRead(string line,bool countStage)
@@ -144,15 +161,14 @@ namespace Guitar
             lineLabel.Refresh();
         }
 
-        private void advanceProgressBar(string error)
+        private void advanceProgressBar(string testName,string error)
         {
             if (error!=null)
             {
                 progressBar.ProgressBarColor = Color.Red;
                 Failures.Add(error);
                 numFailuresLabel.Text = "" + Failures.Count;
-                Match mc=r.Match(error);
-                failureListBox.Items.Add(mc.Groups[1]);
+                failureListBox.Items.Add(testName);
                 failureListBox.SelectedIndex = 0;
                 failureListBox.Refresh();
             }
@@ -213,5 +229,6 @@ namespace Guitar
         {
             errorScreen.Text = Failures[failureListBox.SelectedIndex];
         }
+
     }
 }
