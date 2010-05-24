@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.IO;
@@ -6,7 +6,7 @@ using System.Text.RegularExpressions;
 
 namespace Guitar
 {
-    delegate void TestComplete(string error);
+    delegate void TestComplete(string testName,string error);
     delegate void LineRead(string line,bool countOnly);
 
 
@@ -46,12 +46,12 @@ namespace Guitar
                 {
                     if (l.StartsWith("[       OK ] " + currentTestName))
                     {
-                        notifyTestComplete(null);
+                        notifyTestComplete(currentTestName,null);
                         currentTestName = null;
                     }
                     else if (l.StartsWith("[  FAILED  ] " + currentTestName))
                     {
-                        notifyTestComplete(potentialErrorText);
+                        notifyTestComplete(currentTestName,potentialErrorText);
                         currentTestName = null;
                     }
                     else if (!l.StartsWith("["))
@@ -63,14 +63,13 @@ namespace Guitar
 
     }
 
-        private void parseInputStream(StreamReader input)
+	private void parseInputStream(StreamReader input)
         {
             String line;
-            while ((line = input.ReadLine()) != null)
-            {
-                notifyLineRead(line,modeCountOnly);
-                parseLine(line);
-            }
+			while ((line = input.ReadLine())!=null) {
+        	notifyLineRead(line,modeCountOnly);
+        	parseLine(line);
+			}
         }
 
         public int countTests(StreamReader input)
@@ -79,7 +78,6 @@ namespace Guitar
             modeCountOnly = true;
             parseInputStream(input);
             return numTests;
-
         }
 
         public void parseTests(StreamReader input)
