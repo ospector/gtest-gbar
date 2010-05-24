@@ -1,4 +1,15 @@
 #summary List of project versions
+= Version 1.2.1 =
+  # Show/hide console
+  # Failures named by test name, not CPP file name
+  # splitter allows giving test names more space
+  # Clears dialog before next run
+  # Cleaner parsing of test output
+  # More efficient refresh of screen
+  # Tested and fixed Mono version
+    # Fix to problem in combo management which leads to crashes
+    # Work around for Mono/Ubuntu issue of closing stream before fully read - app does not crash but allows re-pressing "Go".
+
 = Version 1.2 =
   * Support for "shuffle"
   * Support for "force disabled tests"
