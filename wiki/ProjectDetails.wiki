@@ -16,12 +16,15 @@ The UI saves a history of several runs (configurable), allows command line param
   * forcing execution of disabled tests
   * shuffling tests
 
-Here are some [ScreenShots].
+The project runs on both Windows and Linux (under Mono). Here are some [ScreenShots].
 
 = Installation =
   # Download the ZIP
   # Open it somewhere other than "Program Files"
 If you insist on "Program Files", then you will need to run this with Administrative rights. 
+
+= Version History =
+See [VersionHistory]
 
 = FAQ =
 == Why isn't this a plug-in for my favorite IDE ==
