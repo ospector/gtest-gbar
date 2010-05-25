@@ -306,7 +306,7 @@
             this.Controls.Add(this.label1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "GuitarForm";
-            this.Text = "Guitar 1.2.1 - Google Unit Test Application Runner";
+            this.Text = "Guitar 1.2.2 - Google Unit Test Application Runner";
             this.Load += new System.EventHandler(this.GuitarForm_Load);
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel2.ResumeLayout(false);
@@ -340,9 +340,6 @@
         private System.Windows.Forms.ComboBox filter;
         private System.Windows.Forms.CheckBox hideConsole;
         private System.Windows.Forms.SplitContainer splitContainer1;
-        private System.Windows.Forms.ListBox listBox1;
-        private System.Windows.Forms.TextBox textBox1;
-
     }
 }
 
