@@ -6,8 +6,8 @@ using System.Text.RegularExpressions;
 
 namespace Guitar
 {
-    delegate void TestComplete(string testName,string error);
-    delegate void LineRead(string line,bool countOnly);
+    delegate void TestComplete(string testName, string error);
+    delegate void LineRead(string line, bool countOnly);
 
 
 
@@ -19,18 +19,19 @@ namespace Guitar
 
         private TestComplete notifyTestComplete;
         private LineRead notifyLineRead;
-        
+
         private string potentialErrorText;
-        private int numTests=0;
+        private int numTests = 0;
         private bool modeCountOnly;
-        
-        public GoogleTestOutputParser(TestComplete a,LineRead b)
+
+        public GoogleTestOutputParser(TestComplete a, LineRead b)
         {
             notifyTestComplete = a;
             notifyLineRead = b;
         }
 
-        private void parseLine(String l) {
+        private void parseLine(String l)
+        {
             if (modeCountOnly)
             {
                 if (l.StartsWith("  ")) numTests++;
@@ -46,12 +47,12 @@ namespace Guitar
                 {
                     if (l.StartsWith("[       OK ] " + currentTestName))
                     {
-                        notifyTestComplete(currentTestName,null);
+                        notifyTestComplete(currentTestName, null);
                         currentTestName = null;
                     }
                     else if (l.StartsWith("[  FAILED  ] " + currentTestName))
                     {
-                        notifyTestComplete(currentTestName,potentialErrorText);
+                        notifyTestComplete(currentTestName, potentialErrorText);
                         currentTestName = null;
                     }
                     else if (!l.StartsWith("["))
@@ -61,15 +62,16 @@ namespace Guitar
                 }
             }
 
-    }
+        }
 
-	private void parseInputStream(StreamReader input)
+        private void parseInputStream(StreamReader input)
         {
             String line;
-			while ((line = input.ReadLine())!=null) {
-        	notifyLineRead(line,modeCountOnly);
-        	parseLine(line);
-			}
+            while ((line = input.ReadLine()) != null)
+            {
+                notifyLineRead(line, modeCountOnly);
+                parseLine(line);
+            }
         }
 
         public int countTests(StreamReader input)
