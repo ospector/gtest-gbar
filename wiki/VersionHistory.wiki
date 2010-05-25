@@ -1,4 +1,9 @@
 #summary List of project versions
+= Version 1.2.2 =
+  * Better handling of settings save & load
+  * FIX: application would crash without settings
+  * icon transparency
+
 = Version 1.2.1 =
   # Show/hide console
   # Failures named by test name, not CPP file name
