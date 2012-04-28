@@ -49,6 +49,8 @@
             this.filter = new System.Windows.Forms.ComboBox();
             this.hideConsole = new System.Windows.Forms.CheckBox();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.label6 = new System.Windows.Forms.Label();
+            this.textBoxStartupFolder = new System.Windows.Forms.TextBox();
             this.progressBar = new ColorProgressBar.ColorProgressBar();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -62,21 +64,21 @@
             // 
             // errorScreen
             // 
-            this.errorScreen.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.errorScreen.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.errorScreen.Font = new System.Drawing.Font("Courier New", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.errorScreen.Location = new System.Drawing.Point(3, 0);
             this.errorScreen.Multiline = true;
             this.errorScreen.Name = "errorScreen";
-            this.errorScreen.Size = new System.Drawing.Size(520, 197);
+            this.errorScreen.Size = new System.Drawing.Size(520, 174);
             this.errorScreen.TabIndex = 9;
             // 
             // numFailuresLabel
             // 
             this.numFailuresLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.numFailuresLabel.AutoSize = true;
-            this.numFailuresLabel.Location = new System.Drawing.Point(783, 164);
+            this.numFailuresLabel.Location = new System.Drawing.Point(783, 186);
             this.numFailuresLabel.Name = "numFailuresLabel";
             this.numFailuresLabel.Size = new System.Drawing.Size(13, 13);
             this.numFailuresLabel.TabIndex = 5;
@@ -85,7 +87,7 @@
             // numTestsLabel
             // 
             this.numTestsLabel.AutoSize = true;
-            this.numTestsLabel.Location = new System.Drawing.Point(104, 164);
+            this.numTestsLabel.Location = new System.Drawing.Point(104, 186);
             this.numTestsLabel.Name = "numTestsLabel";
             this.numTestsLabel.Size = new System.Drawing.Size(13, 13);
             this.numTestsLabel.TabIndex = 5;
@@ -95,7 +97,7 @@
             // 
             this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(679, 164);
+            this.label2.Location = new System.Drawing.Point(679, 186);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(98, 13);
             this.label2.TabIndex = 4;
@@ -104,7 +106,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(9, 164);
+            this.label1.Location = new System.Drawing.Point(9, 186);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(88, 13);
             this.label1.TabIndex = 4;
@@ -123,10 +125,10 @@
             // 
             // lineLabel
             // 
-            this.lineLabel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.lineLabel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.lineLabel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.lineLabel.Location = new System.Drawing.Point(9, 124);
+            this.lineLabel.Location = new System.Drawing.Point(9, 150);
             this.lineLabel.Name = "lineLabel";
             this.lineLabel.Size = new System.Drawing.Size(787, 23);
             this.lineLabel.TabIndex = 2;
@@ -136,9 +138,9 @@
             this.label3.AutoSize = true;
             this.label3.Location = new System.Drawing.Point(6, 9);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(88, 13);
+            this.label3.Size = new System.Drawing.Size(85, 13);
             this.label3.TabIndex = 7;
-            this.label3.Text = "Google Test exe:";
+            this.label3.Text = "Google Test exe";
             // 
             // button1
             // 
@@ -153,20 +155,20 @@
             // 
             // failureListBox
             // 
-            this.failureListBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.failureListBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.failureListBox.FormattingEnabled = true;
             this.failureListBox.Location = new System.Drawing.Point(0, 0);
             this.failureListBox.Name = "failureListBox";
-            this.failureListBox.Size = new System.Drawing.Size(251, 199);
+            this.failureListBox.Size = new System.Drawing.Size(251, 173);
             this.failureListBox.TabIndex = 8;
             this.failureListBox.SelectedIndexChanged += new System.EventHandler(this.failureListBox_SelectedIndexChanged);
             // 
             // exeFilename
             // 
-            this.exeFilename.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.exeFilename.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.exeFilename.FormattingEnabled = true;
             this.exeFilename.Location = new System.Drawing.Point(125, 6);
             this.exeFilename.Name = "exeFilename";
@@ -176,8 +178,8 @@
             // 
             // clParams
             // 
-            this.clParams.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.clParams.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.clParams.FormattingEnabled = true;
             this.clParams.Location = new System.Drawing.Point(125, 33);
             this.clParams.Name = "clParams";
@@ -189,9 +191,9 @@
             this.label4.AutoSize = true;
             this.label4.Location = new System.Drawing.Point(6, 36);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(113, 13);
+            this.label4.Size = new System.Drawing.Size(110, 13);
             this.label4.TabIndex = 13;
-            this.label4.Text = "Command line params:";
+            this.label4.Text = "Command line params";
             // 
             // shouldShuffle
             // 
@@ -220,18 +222,18 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(6, 62);
+            this.label5.Location = new System.Drawing.Point(6, 88);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(32, 13);
+            this.label5.Size = new System.Drawing.Size(29, 13);
             this.label5.TabIndex = 16;
-            this.label5.Text = "Filter:";
+            this.label5.Text = "Filter";
             // 
             // filter
             // 
-            this.filter.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.filter.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.filter.FormattingEnabled = true;
-            this.filter.Location = new System.Drawing.Point(125, 59);
+            this.filter.Location = new System.Drawing.Point(125, 85);
             this.filter.Name = "filter";
             this.filter.Size = new System.Drawing.Size(600, 21);
             this.filter.TabIndex = 6;
@@ -251,10 +253,10 @@
             // 
             // splitContainer1
             // 
-            this.splitContainer1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.splitContainer1.Location = new System.Drawing.Point(12, 180);
+            this.splitContainer1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.splitContainer1.Location = new System.Drawing.Point(12, 203);
             this.splitContainer1.Name = "splitContainer1";
             // 
             // splitContainer1.Panel1
@@ -264,15 +266,31 @@
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.errorScreen);
-            this.splitContainer1.Size = new System.Drawing.Size(784, 202);
+            this.splitContainer1.Size = new System.Drawing.Size(784, 179);
             this.splitContainer1.SplitterDistance = 254;
             this.splitContainer1.TabIndex = 17;
             // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(6, 62);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(70, 13);
+            this.label6.TabIndex = 18;
+            this.label6.Text = "Startup folder";
+            // 
+            // textBoxStartupFolder
+            // 
+            this.textBoxStartupFolder.Location = new System.Drawing.Point(125, 59);
+            this.textBoxStartupFolder.Name = "textBoxStartupFolder";
+            this.textBoxStartupFolder.Size = new System.Drawing.Size(599, 20);
+            this.textBoxStartupFolder.TabIndex = 19;
+            // 
             // progressBar
             // 
-            this.progressBar.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.progressBar.Location = new System.Drawing.Point(9, 87);
+            this.progressBar.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.progressBar.Location = new System.Drawing.Point(9, 118);
             this.progressBar.Maximum = 9;
             this.progressBar.Minimum = 0;
             this.progressBar.Name = "progressBar";
@@ -286,6 +304,8 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(820, 409);
+            this.Controls.Add(this.textBoxStartupFolder);
+            this.Controls.Add(this.label6);
             this.Controls.Add(this.splitContainer1);
             this.Controls.Add(this.hideConsole);
             this.Controls.Add(this.label5);
@@ -306,7 +326,7 @@
             this.Controls.Add(this.label1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "GuitarForm";
-            this.Text = "Guitar 1.2.2 - Google Unit Test Application Runner";
+            this.Text = "Guitar 1.2.3 - Google Unit Test Application Runner";
             this.Load += new System.EventHandler(this.GuitarForm_Load);
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel2.ResumeLayout(false);
@@ -340,6 +360,8 @@
         private System.Windows.Forms.ComboBox filter;
         private System.Windows.Forms.CheckBox hideConsole;
         private System.Windows.Forms.SplitContainer splitContainer1;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.TextBox textBoxStartupFolder;
     }
 }
 

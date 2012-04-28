@@ -49,6 +49,7 @@ namespace Guitar
             gtestApp.StartInfo.UseShellExecute = false;
             gtestApp.StartInfo.RedirectStandardOutput = true;
             gtestApp.StartInfo.CreateNoWindow = (onlyListTests || (!onlyListTests && hideConsole.Checked));
+            gtestApp.StartInfo.WorkingDirectory = textBoxStartupFolder.Text;
             gtestApp.Start();
             return gtestApp.StandardOutput;
         }
