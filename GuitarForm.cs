@@ -343,5 +343,14 @@ namespace Guitar
             }
         }
 
+        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Close();
+        }
+
+        private void aboutGuitarToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Guitar a UI for a Google Test (https://code.google.com/p/gtest-gbar/)", "About");
+        }
     }
 }
