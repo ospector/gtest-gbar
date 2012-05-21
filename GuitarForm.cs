@@ -50,14 +50,19 @@ namespace Guitar
             gtestApp.StartInfo.UseShellExecute = false;
             gtestApp.StartInfo.RedirectStandardOutput = true;
             gtestApp.StartInfo.CreateNoWindow = (onlyListTests || (!onlyListTests && hideConsole.Checked));
-            if (System.IO.Directory.Exists(comboBoxStartupFolder.Text))
+
+            if (comboBoxStartupFolder.Text != "")
             {
-                gtestApp.StartInfo.WorkingDirectory = comboBoxStartupFolder.Text;
+                if (System.IO.Directory.Exists(comboBoxStartupFolder.Text))
+                {
+                    gtestApp.StartInfo.WorkingDirectory = comboBoxStartupFolder.Text;
+                }
+                else
+                {
+                    MessageBox.Show("Selected startup folder not found.");
+                }
             }
-            else
-            {
-                MessageBox.Show("Selected startup folder not found.");
-            }
+   
             gtestApp.Start();
             return gtestApp.StandardOutput;
         }
