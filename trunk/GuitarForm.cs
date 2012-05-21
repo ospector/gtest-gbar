@@ -42,7 +42,7 @@ namespace Guitar
             return cl.ToString();
         }
 
-        private StreamReader runGtest(bool onlyListTests)
+        private Process runGtest(bool onlyListTests)
         {
             Process gtestApp = new Process();
             gtestApp.StartInfo.FileName = exeFilename.Text;
@@ -64,11 +64,12 @@ namespace Guitar
             }
    
             gtestApp.Start();
-            return gtestApp.StandardOutput;
+            return gtestApp;
         }
 
         private void goBtn_Click(object sender, EventArgs e)
         {
+            int exitCode = 0;
             try
             {
                 saveSettings();
@@ -79,13 +80,18 @@ namespace Guitar
                 bool monoException = false;
                 try
                 {
-                    calibrateProgressBar(parser.countTests(runGtest(true)));
-                    parser.parseTests(runGtest(false));
+                    calibrateProgressBar(parser.countTests(runGtest(true).StandardOutput));
+
+                    Process gtestexe = runGtest(false);
+                    parser.parseTests(gtestexe.StandardOutput);
+
+                    exitCode = gtestexe.ExitCode;
                 }
                 catch (System.ObjectDisposedException)
                 {
                     monoException = true;
                 }
+
                 if (monoException)
                 {
                     cls();
@@ -95,7 +101,16 @@ namespace Guitar
                 {
                     int disabled = (progressBar.Maximum - progressBar.Value);
                     lineLabel.Text = "Done " + progressBar.Value + " of " + progressBar.Maximum + (disabled == 0 ? ". " : ". " + disabled + " are disabled.");
-                    if (Failures.Count == 0) errorScreen.Text = "All is well.";
+                    if (Failures.Count == 0 && exitCode == 0) 
+                        errorScreen.Text = "All is well.";
+                    else
+                    {
+                        if (exitCode != 0)
+                        {
+                            errorScreen.Text = "Exit code != 0. Maybe an assertion failed.";
+                        }
+                    }
+                        
                 }
                 goBtn.Enabled = canRun();
             }
