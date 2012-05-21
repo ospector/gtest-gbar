@@ -64,14 +64,21 @@ namespace Guitar
 
         }
 
+        //int i = 0;
         private void parseInputStream(StreamReader input)
         {
-            String line;
+            //i++; StreamWriter debugStream = new StreamWriter(@"C:\Users\Julian\Desktop\log" + i + ".txt");
+
+            String line; 
             while ((line = input.ReadLine()) != null)
             {
+                //debugStream.WriteLine(line);
+                
                 notifyLineRead(line, modeCountOnly);
                 parseLine(line);
             }
+            
+            //debugStream.Close();
         }
 
         public int countTests(StreamReader input)
