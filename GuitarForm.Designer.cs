@@ -38,7 +38,7 @@
             this.goBtn = new System.Windows.Forms.Button();
             this.lineLabel = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
-            this.button1 = new System.Windows.Forms.Button();
+            this.buttonSelect = new System.Windows.Forms.Button();
             this.failureListBox = new System.Windows.Forms.ListBox();
             this.exeFilename = new System.Windows.Forms.ComboBox();
             this.clParams = new System.Windows.Forms.ComboBox();
@@ -50,7 +50,8 @@
             this.hideConsole = new System.Windows.Forms.CheckBox();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.label6 = new System.Windows.Forms.Label();
-            this.textBoxStartupFolder = new System.Windows.Forms.TextBox();
+            this.comboBoxStartupFolder = new System.Windows.Forms.ComboBox();
+            this.buttonSelectStartupFolder = new System.Windows.Forms.Button();
             this.progressBar = new ColorProgressBar.ColorProgressBar();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -64,9 +65,9 @@
             // 
             // errorScreen
             // 
-            this.errorScreen.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.errorScreen.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.errorScreen.Font = new System.Drawing.Font("Courier New", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.errorScreen.Location = new System.Drawing.Point(3, 0);
             this.errorScreen.Multiline = true;
@@ -125,8 +126,8 @@
             // 
             // lineLabel
             // 
-            this.lineLabel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.lineLabel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.lineLabel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.lineLabel.Location = new System.Drawing.Point(9, 150);
             this.lineLabel.Name = "lineLabel";
@@ -142,22 +143,22 @@
             this.label3.TabIndex = 7;
             this.label3.Text = "Google Test exe";
             // 
-            // button1
+            // buttonSelect
             // 
-            this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.button1.Location = new System.Drawing.Point(696, 4);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 1;
-            this.button1.Text = "Select...";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.buttonSelect.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonSelect.Location = new System.Drawing.Point(696, 4);
+            this.buttonSelect.Name = "buttonSelect";
+            this.buttonSelect.Size = new System.Drawing.Size(75, 23);
+            this.buttonSelect.TabIndex = 1;
+            this.buttonSelect.Text = "Select...";
+            this.buttonSelect.UseVisualStyleBackColor = true;
+            this.buttonSelect.Click += new System.EventHandler(this.button1_Click);
             // 
             // failureListBox
             // 
-            this.failureListBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.failureListBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.failureListBox.FormattingEnabled = true;
             this.failureListBox.Location = new System.Drawing.Point(0, 0);
             this.failureListBox.Name = "failureListBox";
@@ -167,8 +168,8 @@
             // 
             // exeFilename
             // 
-            this.exeFilename.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.exeFilename.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.exeFilename.FormattingEnabled = true;
             this.exeFilename.Location = new System.Drawing.Point(125, 6);
             this.exeFilename.Name = "exeFilename";
@@ -178,8 +179,8 @@
             // 
             // clParams
             // 
-            this.clParams.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.clParams.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.clParams.FormattingEnabled = true;
             this.clParams.Location = new System.Drawing.Point(125, 33);
             this.clParams.Name = "clParams";
@@ -230,8 +231,8 @@
             // 
             // filter
             // 
-            this.filter.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.filter.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.filter.FormattingEnabled = true;
             this.filter.Location = new System.Drawing.Point(125, 85);
             this.filter.Name = "filter";
@@ -253,9 +254,9 @@
             // 
             // splitContainer1
             // 
-            this.splitContainer1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.splitContainer1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.splitContainer1.Location = new System.Drawing.Point(12, 203);
             this.splitContainer1.Name = "splitContainer1";
             // 
@@ -279,19 +280,29 @@
             this.label6.TabIndex = 18;
             this.label6.Text = "Startup folder";
             // 
-            // textBoxStartupFolder
+            // comboBoxStartupFolder
             // 
-            this.textBoxStartupFolder.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBoxStartupFolder.Location = new System.Drawing.Point(125, 59);
-            this.textBoxStartupFolder.Name = "textBoxStartupFolder";
-            this.textBoxStartupFolder.Size = new System.Drawing.Size(564, 20);
-            this.textBoxStartupFolder.TabIndex = 19;
+            this.comboBoxStartupFolder.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.comboBoxStartupFolder.Location = new System.Drawing.Point(125, 59);
+            this.comboBoxStartupFolder.Name = "comboBoxStartupFolder";
+            this.comboBoxStartupFolder.Size = new System.Drawing.Size(564, 20);
+            this.comboBoxStartupFolder.TabIndex = 19;
+            // 
+            // buttonSelectStartupFolder
+            // 
+            this.buttonSelectStartupFolder.Location = new System.Drawing.Point(696, 57);
+            this.buttonSelectStartupFolder.Name = "buttonSelectStartupFolder";
+            this.buttonSelectStartupFolder.Size = new System.Drawing.Size(75, 23);
+            this.buttonSelectStartupFolder.TabIndex = 20;
+            this.buttonSelectStartupFolder.Text = "Select..";
+            this.buttonSelectStartupFolder.UseVisualStyleBackColor = true;
+            this.buttonSelectStartupFolder.Click += new System.EventHandler(this.buttonSelectStartupFolder_Click);
             // 
             // progressBar
             // 
-            this.progressBar.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.progressBar.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.progressBar.Location = new System.Drawing.Point(9, 118);
             this.progressBar.Maximum = 9;
             this.progressBar.Minimum = 0;
@@ -306,7 +317,8 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(785, 409);
-            this.Controls.Add(this.textBoxStartupFolder);
+            this.Controls.Add(this.buttonSelectStartupFolder);
+            this.Controls.Add(this.comboBoxStartupFolder);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.splitContainer1);
             this.Controls.Add(this.hideConsole);
@@ -317,7 +329,7 @@
             this.Controls.Add(this.label4);
             this.Controls.Add(this.clParams);
             this.Controls.Add(this.exeFilename);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.buttonSelect);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.numFailuresLabel);
             this.Controls.Add(this.progressBar);
@@ -351,7 +363,7 @@
         private System.Windows.Forms.Label lineLabel;
         private ColorProgressBar.ColorProgressBar progressBar;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button buttonSelect;
         private System.Windows.Forms.ListBox failureListBox;
         private System.Windows.Forms.ComboBox exeFilename;
         private System.Windows.Forms.ComboBox clParams;
@@ -363,7 +375,8 @@
         private System.Windows.Forms.CheckBox hideConsole;
         private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.TextBox textBoxStartupFolder;
+        private System.Windows.Forms.ComboBox comboBoxStartupFolder;
+        private System.Windows.Forms.Button buttonSelectStartupFolder;
     }
 }
 
