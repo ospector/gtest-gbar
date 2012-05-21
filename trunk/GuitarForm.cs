@@ -15,6 +15,7 @@ namespace Guitar
         const string SETTING_MAX_HISTORY = "maxHistory";
         const string SETTING_GTEST_EXES = "gtest";
         const string SETTING_GTEST_PARAMS = "gtest-params";
+        const string SETTING_GTEST_STARTUP_FOLDER = "gtest-startupFolder";
         const string SETTING_GTEST_FILTERS = "gtest-filters";
 
         List<string> Failures = new List< string>();
@@ -49,40 +50,54 @@ namespace Guitar
             gtestApp.StartInfo.UseShellExecute = false;
             gtestApp.StartInfo.RedirectStandardOutput = true;
             gtestApp.StartInfo.CreateNoWindow = (onlyListTests || (!onlyListTests && hideConsole.Checked));
-            gtestApp.StartInfo.WorkingDirectory = textBoxStartupFolder.Text;
+            if (System.IO.Directory.Exists(comboBoxStartupFolder.Text))
+            {
+                gtestApp.StartInfo.WorkingDirectory = comboBoxStartupFolder.Text;
+            }
+            else
+            {
+                MessageBox.Show("Selected startup folder not found.");
+            }
             gtestApp.Start();
             return gtestApp.StandardOutput;
         }
 
         private void goBtn_Click(object sender, EventArgs e)
         {
-            saveSettings();
-            cls();
-
-            GoogleTestOutputParser parser = new GoogleTestOutputParser(this.advanceProgressBar, this.lineRead);
-
-            bool monoException = false;
             try
             {
-                calibrateProgressBar(parser.countTests(runGtest(true)));
-                parser.parseTests(runGtest(false));
-            }
-            catch (System.ObjectDisposedException )
-            {
-                monoException = true;
-            }
-            if (monoException)
-            {
+                saveSettings();
                 cls();
-                errorScreen.Text = "Please Retry, Failure during run due to StreamReader close\n(This is a known issue in Mono on Ubuntu.)";
+
+                GoogleTestOutputParser parser = new GoogleTestOutputParser(this.advanceProgressBar, this.lineRead);
+
+                bool monoException = false;
+                try
+                {
+                    calibrateProgressBar(parser.countTests(runGtest(true)));
+                    parser.parseTests(runGtest(false));
+                }
+                catch (System.ObjectDisposedException)
+                {
+                    monoException = true;
+                }
+                if (monoException)
+                {
+                    cls();
+                    errorScreen.Text = "Please Retry, Failure during run due to StreamReader close\n(This is a known issue in Mono on Ubuntu.)";
+                }
+                else
+                {
+                    int disabled = (progressBar.Maximum - progressBar.Value);
+                    lineLabel.Text = "Done " + progressBar.Value + " of " + progressBar.Maximum + (disabled == 0 ? ". " : ". " + disabled + " are disabled.");
+                    if (Failures.Count == 0) errorScreen.Text = "All is well.";
+                }
+                goBtn.Enabled = canRun();
             }
-            else
+            catch (System.Exception ex)
             {
-                int disabled = (progressBar.Maximum - progressBar.Value);
-                lineLabel.Text = "Done " + progressBar.Value + " of " + progressBar.Maximum + (disabled == 0 ? ". " : ". " + disabled + " are disabled.");
-                if (Failures.Count == 0) errorScreen.Text = "All is well.";
+                MessageBox.Show(ex.ToString());
             }
-            goBtn.Enabled = canRun();
         }
 
         private void cls()
@@ -142,6 +157,7 @@ namespace Guitar
             addOrSet(config,SETTING_MAX_HISTORY,""+maxHistory);
             addOrSet(config,SETTING_GTEST_EXES, manageHistoryCombo(exeFilename));
             addOrSet(config,SETTING_GTEST_PARAMS,manageHistoryCombo(clParams));
+            addOrSet(config,SETTING_GTEST_STARTUP_FOLDER, manageHistoryCombo(comboBoxStartupFolder));
             addOrSet(config,SETTING_GTEST_FILTERS,manageHistoryCombo(filter));
   
             config.Save(ConfigurationSaveMode.Modified);
@@ -225,7 +241,6 @@ namespace Guitar
                 ret = ret && (exeFilename.Text.TrimEnd().EndsWith("exe") || exeFilename.Text.TrimEnd().EndsWith("bat"));
             }
             return ret;
-
         }
 
         private void loadCombo(ComboBox cb, string vals)
@@ -265,6 +280,47 @@ namespace Guitar
         private void failureListBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             errorScreen.Text = Failures[failureListBox.SelectedIndex];
+        }
+
+        private void buttonSelectStartupFolder_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                string startupPath = Application.StartupPath;
+                using (FolderBrowserDialog dialog = new FolderBrowserDialog())
+                {
+                    dialog.Description = "Select a startup folder";
+                    dialog.ShowNewFolderButton = false;
+                    dialog.RootFolder = Environment.SpecialFolder.MyComputer;
+
+                    // Select current startup folder
+                    if (comboBoxStartupFolder.Text != "")
+                    {
+                        if (System.IO.Directory.Exists(comboBoxStartupFolder.Text))
+                            dialog.SelectedPath = comboBoxStartupFolder.Text;
+                    }
+                    else
+                    {
+                        // try to select folder where google test exe is located
+                        string strExePath = exeFilename.Text;
+                        if (System.IO.File.Exists(strExePath))
+                        {           
+                            string folder = System.IO.Path.GetDirectoryName(strExePath);
+                            dialog.SelectedPath = folder;
+                        }
+                    }
+                    
+                    if (dialog.ShowDialog() == DialogResult.OK)
+                    {
+                        string folder = dialog.SelectedPath;
+                        comboBoxStartupFolder.Text = folder;
+                    }
+                }
+            }
+            catch (Exception exc)
+            {
+                MessageBox.Show("Selection of a startup folder failed (" + exc.Message + ").");
+            }
         }
 
     }
