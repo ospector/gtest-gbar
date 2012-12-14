@@ -28,7 +28,7 @@ See [VersionHistory]
 
 = FAQ =
 == Why isn't this a plug-in for my favorite IDE ==
-I didn't want to bother writing several plug-in's. Actually I sisn;t even want to write one. I find that a standalone app that I run constantly as I code is very convenient, and I am not limited to VS 2005/2008/2010, Eclipse, etc.
+I didn't want to bother writing several plug-in's. Actually I didn't even want to write one. I find that a standalone app that I run constantly as I code is very convenient, and I am not limited to VS 2005/2008/2010, Eclipse, etc.
 == So how do you recommend I use this ==
   # Fire up your IDE
   # Run the app (called "Guitar" - you can work out the acronym)
