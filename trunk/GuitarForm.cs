@@ -21,11 +21,30 @@ namespace Guitar
         List<string> Failures = new List< string>();
         private bool inWindows;
         private int maxHistory = DEFAULT_MAX_HISTORY;
+		private bool gotCommandlinePath;
 
         public GuitarForm()
         {
             inWindows = (System.Environment.OSVersion.Platform != System.PlatformID.Unix && System.Environment.OSVersion.Platform != System.PlatformID.MacOSX);
             InitializeComponent();
+
+            gotCommandlinePath = false;
+        }
+		public GuitarForm(String fileName)
+        {
+            inWindows = (System.Environment.OSVersion.Platform != System.PlatformID.Unix && System.Environment.OSVersion.Platform != System.PlatformID.MacOSX);
+            InitializeComponent();
+            
+            guitarReceivedAPathToATestExecutable();
+            setFileNameInputbox(fileName);
+        }
+        private void guitarReceivedAPathToATestExecutable()
+        {
+            gotCommandlinePath = true;
+        }
+        private void setFileNameInputbox(String filename)
+        {
+            exeFilename.Text = filename;            
         }
 
         private string buildArgs(bool onlyListTests)
@@ -287,7 +306,11 @@ namespace Guitar
             loadCombo(filter, getConfigValue(config, SETTING_GTEST_FILTERS, ""));
             goBtn.Enabled = canRun();
             errorScreen.Text = config.FilePath;
-
+			
+			if (gotCommandlinePath && canRun())
+            {
+                goBtn_Click(sender, e);
+            }
         }
 
         private string getConfigValue(Configuration config, string key, string defaultVal)
