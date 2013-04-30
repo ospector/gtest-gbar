@@ -119,7 +119,11 @@ namespace Guitar
                 else
                 {
                     int disabled = (progressBar.Maximum - progressBar.Value);
-                    lineLabel.Text = "Done " + progressBar.Value + " of " + progressBar.Maximum + (disabled == 0 ? ". " : ". " + disabled + " are disabled.");
+                    
+                    lineLabel.Text = "Done " + progressBar.Value + 
+                                     " of " + progressBar.Maximum + 
+                                     (disabled == 0 ? ". " : ". " + disabled + " are disabled.") +
+                                     ". Pass: " + ((progressBar.Value - Failures.Count ) * 100 / progressBar.Value) + "%" ;
                     if (Failures.Count == 0 && exitCode == 0) 
                         errorScreen.Text = "All is well.";
                     else
@@ -222,8 +226,8 @@ namespace Guitar
             progressBar.Value = 0;
             progressBar.Minimum = 0;
             progressBar.Maximum = n;
-            progressBar.ProgressBarColor = Color.Green;
-
+            
+            
             numTestsLabel.Refresh();
             numFailuresLabel.Refresh();
         }
@@ -251,6 +255,10 @@ namespace Guitar
                 failureListBox.Items.Add(testName);
                 failureListBox.SelectedIndex = 0;
                 failureListBox.Refresh();
+            }
+            else
+            {
+                progressBar.ProgressBarColor = Color.Green;
             }
 
             progressBar.Value++;
