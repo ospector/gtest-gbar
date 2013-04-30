@@ -1,6 +1,7 @@
 ﻿using System.Drawing;
 using System;
 using System.Windows.Forms;
+using System.Collections.Generic;
 namespace ColorProgressBar
 {
     partial class ColorProgressBar
@@ -33,6 +34,7 @@ namespace ColorProgressBar
         {
             components = new System.ComponentModel.Container();
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            progressColorList = new List<Color>();
         }
 
         #endregion
@@ -40,7 +42,8 @@ namespace ColorProgressBar
         int min = 0;	// Minimum value for progress range
         int max = 100;	// Maximum value for progress range
         int val = 0;		// Current progress
-        Color BarColor = Color.Blue;		// Color of progress meter
+  //      Color BarColor = Color.Blue;		// Color of progress meter
+        List<Color> progressColorList;
 
         protected override void OnResize(EventArgs e)
         {
@@ -50,22 +53,57 @@ namespace ColorProgressBar
 
         protected override void OnPaint(PaintEventArgs e)
         {
-            Graphics g = e.Graphics;
-            SolidBrush brush = new SolidBrush(BarColor);
+            
             float percent = (float)(val - min) / (float)(max - min);
             Rectangle rect = this.ClientRectangle;
-
             // Calculate area for drawing the progress.
-            rect.Width = (int)((float)rect.Width * percent);
+            int rectWidth = (int)((float)rect.Width * percent  / (val != 0 ? val : 1));
 
-            // Draw the progress meter.
+            Graphics g = e.Graphics;
+            SolidBrush brush;
+            int numberofcolors = progressColorList.Count;
+
+            int countGreen = 0;
+            int countRed = 0;
+            int countGray = 0;
+
+            List<Color>.Enumerator en = progressColorList.GetEnumerator();
+            while (en.MoveNext())
+            {
+                Color currentColor = en.Current;
+                if (currentColor.Equals(Color.Green))
+                {
+                    countGreen++;
+                }
+                if (currentColor.Equals(Color.Red))
+                {
+                    countRed++;
+                }
+                countGray++;
+            }
+            en.Dispose();
+            countGray -=  countGreen + countRed;
+            
+            brush = new SolidBrush(Color.Green);
+            rect.X = 0;
+            rect.Width = rectWidth * countGreen;
             g.FillRectangle(brush, rect);
 
+            brush = new SolidBrush(Color.Red);
+            rect.X = rectWidth * countGreen;
+            rect.Width = rectWidth * countRed;
+            g.FillRectangle(brush, rect);
+
+            brush = new SolidBrush(Color.Gray);
+            rect.X = rectWidth * ( countGreen + countRed );
+            rect.Width = rectWidth * countGray;
+            g.FillRectangle(brush, rect);
+            // Clean up.
+            brush.Dispose();
             // Draw a three-dimensional border around the control.
             Draw3DBorder(g);
 
-            // Clean up.
-            brush.Dispose();
+            
             g.Dispose();
         }
 
@@ -154,7 +192,10 @@ namespace ColorProgressBar
                 {
                     val = value;
                 }
-
+                if (value == 0)
+                {
+                    progressColorList.Clear();
+                }
                 // Invalidate only the changed area.
                 float percent;
 
@@ -194,12 +235,13 @@ namespace ColorProgressBar
         {
             get
             {
-                return BarColor;
+                return Color.Black; // BarColor;
             }
 
             set
             {
-                BarColor = value;
+       //         BarColor = value;
+                progressColorList.Add(value);
 
                 // Invalidate the control to get a repaint.
                 this.Invalidate();

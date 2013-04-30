@@ -55,9 +55,9 @@
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.progressBar = new ColorProgressBar.ColorProgressBar();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutGuitarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.progressBar = new ColorProgressBar.ColorProgressBar();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
@@ -331,19 +331,6 @@
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
-            // progressBar
-            // 
-            this.progressBar.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.progressBar.Location = new System.Drawing.Point(9, 145);
-            this.progressBar.Maximum = 9;
-            this.progressBar.Minimum = 0;
-            this.progressBar.Name = "progressBar";
-            this.progressBar.ProgressBarColor = System.Drawing.Color.Blue;
-            this.progressBar.Size = new System.Drawing.Size(752, 24);
-            this.progressBar.TabIndex = 3;
-            this.progressBar.Value = 0;
-            // 
             // helpToolStripMenuItem
             // 
             this.helpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -358,6 +345,19 @@
             this.aboutGuitarToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.aboutGuitarToolStripMenuItem.Text = "About Guitar";
             this.aboutGuitarToolStripMenuItem.Click += new System.EventHandler(this.aboutGuitarToolStripMenuItem_Click);
+            // 
+            // progressBar
+            // 
+            this.progressBar.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.progressBar.Location = new System.Drawing.Point(9, 145);
+            this.progressBar.Maximum = 9;
+            this.progressBar.Minimum = 0;
+            this.progressBar.Name = "progressBar";
+            this.progressBar.ProgressBarColor = System.Drawing.Color.Black;
+            this.progressBar.Size = new System.Drawing.Size(752, 24);
+            this.progressBar.TabIndex = 3;
+            this.progressBar.Value = 0;
             // 
             // GuitarForm
             // 
