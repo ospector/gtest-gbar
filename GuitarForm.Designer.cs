@@ -50,7 +50,7 @@
             this.hideConsole = new System.Windows.Forms.CheckBox();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.label6 = new System.Windows.Forms.Label();
-            this.comboBoxStartupFolder = new System.Windows.Forms.ComboBox();
+            this.startupFolder = new System.Windows.Forms.ComboBox();
             this.buttonSelectStartupFolder = new System.Windows.Forms.Button();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -287,14 +287,14 @@
             this.label6.Text = "Startup folder";
             this.label6.Click += new System.EventHandler(this.label6_Click);
             // 
-            // comboBoxStartupFolder
+            // startupFolder
             // 
-            this.comboBoxStartupFolder.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.startupFolder.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.comboBoxStartupFolder.Location = new System.Drawing.Point(125, 86);
-            this.comboBoxStartupFolder.Name = "comboBoxStartupFolder";
-            this.comboBoxStartupFolder.Size = new System.Drawing.Size(564, 21);
-            this.comboBoxStartupFolder.TabIndex = 19;
+            this.startupFolder.Location = new System.Drawing.Point(125, 86);
+            this.startupFolder.Name = "startupFolder";
+            this.startupFolder.Size = new System.Drawing.Size(564, 21);
+            this.startupFolder.TabIndex = 19;
             // 
             // buttonSelectStartupFolder
             // 
@@ -366,7 +366,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(785, 457);
             this.Controls.Add(this.buttonSelectStartupFolder);
-            this.Controls.Add(this.comboBoxStartupFolder);
+            this.Controls.Add(this.startupFolder);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.splitContainer1);
             this.Controls.Add(this.hideConsole);
@@ -427,7 +427,7 @@
         private System.Windows.Forms.CheckBox hideConsole;
         private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.ComboBox comboBoxStartupFolder;
+        private System.Windows.Forms.ComboBox startupFolder;
         private System.Windows.Forms.Button buttonSelectStartupFolder;
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;

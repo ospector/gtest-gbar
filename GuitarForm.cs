@@ -22,9 +22,9 @@ namespace Guitar
         private bool inWindows;
         private bool gotCommandlinePath = false;
 
-        private Configuration config;
-        private AppSettingsSection programSettings;
+        private Dictionary<string, ComboBox> controls;
 
+        Configurator _config;
         public GuitarForm()
         {
             initializeForm(); // TODO: find a way to call GuitarForm() from GuitarForm(String fileName)
@@ -39,12 +39,18 @@ namespace Guitar
         private void initializeForm(){
             inWindows = (System.Environment.OSVersion.Platform != System.PlatformID.Unix && System.Environment.OSVersion.Platform != System.PlatformID.MacOSX);
             InitializeComponent();
-            setConfigurationFile();
+
+            controls = new Dictionary<string, ComboBox>();
+            controls.Add(SETTING_GTEST_EXES, exeFilename);
+            controls.Add(SETTING_GTEST_PARAMS, clParams);
+            controls.Add(SETTING_GTEST_FILTERS, filter);
+            controls.Add(SETTING_GTEST_STARTUP_FOLDER, startupFolder);
+
+            _config = new Configurator(controls);
+
+            //setConfigurationFile();
         }
-        private void setConfigurationFile(){
-            config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
-            programSettings = config.AppSettings;
-        }
+      
         private void guitarReceivedAPathToATestExecutable()
         {
             gotCommandlinePath = true;
@@ -56,44 +62,26 @@ namespace Guitar
         
         private void GuitarForm_Load(object sender, EventArgs e)
         {
-            loadComboboxValues(exeFilename, getConfigValue( SETTING_GTEST_EXES, ""));
-            loadComboboxValues(clParams, getConfigValue( SETTING_GTEST_PARAMS, ""));
-            loadComboboxValues(filter, getConfigValue( SETTING_GTEST_FILTERS, ""));
-            loadComboboxValues(comboBoxStartupFolder,getConfigValue(SETTING_GTEST_STARTUP_FOLDER, ""));
-            goBtn.Enabled = canRun();
-            errorScreen.Text = config.FilePath;
+            _config.autoloadFromValues();
 
-            if (gotCommandlinePath && canRun())
+            goBtn.Enabled = canRun();
+            errorScreen.Text = _config.getFilePath();
+
+            if (gotCommandlinePath && goBtn.Enabled)
             {
                 goBtn_Click(sender, e);
             }
         }
-        private string getConfigValue(string key, string defaultVal)
-        {
-            KeyValueConfigurationElement setting = programSettings.Settings[key];
-            if (setting == null) return defaultVal;
-            return setting.Value;
-        }
-
-        private void loadComboboxValues(ComboBox cb, string vals)
-        {
-            if (vals != null && vals.Trim().Length > 0)
-            {
-                string[] arr = vals.Split('|');
-                foreach (string s in arr)
-                {
-                    cb.Items.Add(s);
-                }
-                cb.SelectedIndex = 0;
-            }
-        }
-
+       
         private void goBtn_Click(object sender, EventArgs e)
         {
             int exitCode = 0;
             try
             {
-                saveSettings();
+                autoNewComboboxesItemsInHistory();
+                _config.saveSettings();
+                errorScreen.Text = _config.getFilePath();
+
                 cls();
 
                 GoogleTestOutputParser parser = new GoogleTestOutputParser(this.advanceProgressBar, this.lineRead);
@@ -116,7 +104,8 @@ namespace Guitar
                 if (monoException)
                 {
                     cls();
-                    errorScreen.Text = "Please Retry, Failure during run due to StreamReader close\n(This is a known issue in Mono on Ubuntu.)";
+                    errorScreen.Text = "Please Retry, Failure during run due to StreamReader close\n" +
+                                        "(This is a known issue in Mono on Ubuntu.)";
                 }
                 else
                 {
@@ -144,67 +133,15 @@ namespace Guitar
                 MessageBox.Show(ex.ToString());
             }
         }
-        private Process runGtest(bool onlyListTests)
+        private void autoNewComboboxesItemsInHistory()
         {
-            Process gtestApp = new Process();
-            gtestApp.StartInfo.FileName = exeFilename.Text;
-            gtestApp.StartInfo.Arguments = buildArgs(onlyListTests);
-            gtestApp.StartInfo.UseShellExecute = false;
-            gtestApp.StartInfo.RedirectStandardOutput = true;
-            gtestApp.StartInfo.CreateNoWindow = (onlyListTests || (!onlyListTests && hideConsole.Checked));
-
-            if (comboBoxStartupFolder.Text != "")
+            Dictionary<string, ComboBox>.Enumerator en = controls.GetEnumerator();
+            while (en.MoveNext())
             {
-                if (System.IO.Directory.Exists(comboBoxStartupFolder.Text))
-                {
-                    gtestApp.StartInfo.WorkingDirectory = comboBoxStartupFolder.Text;
-                }
-                else
-                {
-                    MessageBox.Show("Selected startup folder not found.");
-                }
+                putNewItemOnHistorysTop(en.Current.Value);
             }
-
-            gtestApp.Start();
-            return gtestApp;
-        }
-        private string buildArgs(bool onlyListTests)
-        {
-            StringBuilder cl = new StringBuilder();
-            cl.Append(clParams.Text);
-            if (onlyListTests) cl.Append("--gtest_list_tests ");
-            if (shouldShuffle.Checked) cl.Append(' ').Append("--gtest_shuffle");
-            if (shouldRunDisabled.Checked) cl.Append(' ').Append("--gtest_also_run_disabled_tests");
-            if (filter.Text.Trim().Length > 0)
-            {
-                cl.Append(" --gtest_filter=").Append(filter.Text.Trim());
-            }
-            return cl.ToString();
         }
 
-        private void cls()
-        {
-            progressBar.Value = 0;
-            failureListBox.Items.Clear();
-            errorScreen.Text = "";
-            errorScreen.Refresh();
-        }
-        
-        private void saveSettings()
-        {
-            putNewItemOnHistorysTop(exeFilename);
-            putNewItemOnHistorysTop(clParams);
-            putNewItemOnHistorysTop(comboBoxStartupFolder);
-            putNewItemOnHistorysTop(filter);
-
-            setConfigurationSetting(SETTING_GTEST_EXES, toPipedString(exeFilename));
-            setConfigurationSetting(SETTING_GTEST_PARAMS, toPipedString(clParams));
-            setConfigurationSetting(SETTING_GTEST_STARTUP_FOLDER, toPipedString(comboBoxStartupFolder));
-            setConfigurationSetting(SETTING_GTEST_FILTERS, toPipedString(filter));
-  
-            config.Save(ConfigurationSaveMode.Modified);
-            errorScreen.Text = config.FilePath;
-        }
         private void putNewItemOnHistorysTop(ComboBox cb)
         {
             // Is this an old item selection or a new item
@@ -230,34 +167,13 @@ namespace Guitar
             }
 
         }
-        private String toPipedString(ComboBox cb)
+       
+        private void cls()
         {
-            StringBuilder builder = new StringBuilder();
-            int i = 0;
-            foreach (Object o in cb.Items)
-            {
-                string t = ((string)o).Trim();
-                if (t.Length > 0)
-                {
-                    if (i > 0) builder.Append("|");
-                    builder.Append(t);
-                    i++;
-                }
-            }
-
-            return builder.ToString();
-        }
-
-        private void setConfigurationSetting(string key, string val)
-        {
-            if (programSettings.Settings[key] == null)
-            {
-                programSettings.Settings.Add(key, val);
-            } 
-            else 
-            {
-                programSettings.Settings[key].Value = val;
-            }
+            progressBar.Value = 0;
+            failureListBox.Items.Clear();
+            errorScreen.Text = "";
+            errorScreen.Refresh();
         }
 
         private void calibrateProgressBar(int n)
@@ -270,11 +186,57 @@ namespace Guitar
             progressBar.Value = 0;
             progressBar.Minimum = 0;
             progressBar.Maximum = n;
-            
-            
+
+
             numTestsLabel.Refresh();
             numFailuresLabel.Refresh();
         }
+
+        private Process runGtest(bool onlyListTests)
+        {
+            Process gtestApp = new Process();
+            gtestApp.StartInfo.FileName = exeFilename.Text;
+            gtestApp.StartInfo.Arguments = buildArgs(onlyListTests);
+            gtestApp.StartInfo.UseShellExecute = false;
+            gtestApp.StartInfo.RedirectStandardOutput = true;
+            gtestApp.StartInfo.CreateNoWindow = (onlyListTests || (!onlyListTests && hideConsole.Checked));
+
+            if (startupFolder.Text != "")
+            {
+                if (System.IO.Directory.Exists(startupFolder.Text))
+                {
+                    gtestApp.StartInfo.WorkingDirectory = startupFolder.Text;
+                }
+                else
+                {
+                    MessageBox.Show("Selected startup folder not found.");
+                }
+            }
+
+            gtestApp.Start();
+            return gtestApp;
+        }
+        private string buildArgs(bool onlyListTests)
+        {
+            StringBuilder cl = new StringBuilder();
+            cl.Append(clParams.Text);
+            if (onlyListTests) cl.Append("--gtest_list_tests ");
+            if (shouldShuffle.Checked) cl.Append(' ').Append("--gtest_shuffle");
+            if (shouldRunDisabled.Checked) cl.Append(' ').Append("--gtest_also_run_disabled_tests");
+            if (filter.Text.Trim().Length > 0)
+            {
+                cl.Append(" --gtest_filter=").Append(filter.Text.Trim());
+            }
+            return cl.ToString();
+        }
+
+        
+        
+       
+
+       
+
+        
 
         private void lineRead(string line, bool countStage)
         {
@@ -353,10 +315,10 @@ namespace Guitar
                     dialog.RootFolder = Environment.SpecialFolder.MyComputer;
 
                     // Select current startup folder
-                    if (comboBoxStartupFolder.Text != "")
+                    if (startupFolder.Text != "")
                     {
-                        if (System.IO.Directory.Exists(comboBoxStartupFolder.Text))
-                            dialog.SelectedPath = comboBoxStartupFolder.Text;
+                        if (System.IO.Directory.Exists(startupFolder.Text))
+                            dialog.SelectedPath = startupFolder.Text;
                     }
                     else
                     {
@@ -372,7 +334,7 @@ namespace Guitar
                     if (dialog.ShowDialog() == DialogResult.OK)
                     {
                         string folder = dialog.SelectedPath;
-                        comboBoxStartupFolder.Text = folder;
+                        startupFolder.Text = folder;
                     }
                 }
             }
