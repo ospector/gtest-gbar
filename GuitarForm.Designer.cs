@@ -285,6 +285,7 @@
             this.label6.Size = new System.Drawing.Size(70, 13);
             this.label6.TabIndex = 18;
             this.label6.Text = "Startup folder";
+            this.label6.Click += new System.EventHandler(this.label6_Click);
             // 
             // comboBoxStartupFolder
             // 
@@ -327,7 +328,7 @@
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(92, 22);
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
@@ -342,7 +343,7 @@
             // aboutGuitarToolStripMenuItem
             // 
             this.aboutGuitarToolStripMenuItem.Name = "aboutGuitarToolStripMenuItem";
-            this.aboutGuitarToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.aboutGuitarToolStripMenuItem.Size = new System.Drawing.Size(142, 22);
             this.aboutGuitarToolStripMenuItem.Text = "About Guitar";
             this.aboutGuitarToolStripMenuItem.Click += new System.EventHandler(this.aboutGuitarToolStripMenuItem_Click);
             // 
