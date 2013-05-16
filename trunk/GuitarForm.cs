@@ -21,10 +21,11 @@ namespace Guitar
         List<string> Failures = new List< string>();
         private bool inWindows;
         private bool gotCommandlinePath = false;
+        private String commmandlinePath;
 
         private Dictionary<string, ComboBox> controls;
 
-        Configurator _config;
+        Configurator configurator;
         public GuitarForm()
         {
             initializeForm(); // TODO: find a way to call GuitarForm() from GuitarForm(String fileName)
@@ -46,7 +47,7 @@ namespace Guitar
             controls.Add(SETTING_GTEST_FILTERS, filter);
             controls.Add(SETTING_GTEST_STARTUP_FOLDER, startupFolder);
 
-            _config = new Configurator(controls);
+            configurator = new Configurator(controls);
 
             //setConfigurationFile();
         }
@@ -57,18 +58,19 @@ namespace Guitar
         }
         private void setFileNameInputbox(String filename)
         {
-            exeFilename.Text = filename;
+            commmandlinePath = filename;
         }
         
         private void GuitarForm_Load(object sender, EventArgs e)
         {
-            _config.autoloadFromValues();
+            configurator.autoloadFromValues();
 
             goBtn.Enabled = canRun();
-            errorScreen.Text = _config.getFilePath();
+            errorScreen.Text = configurator.getFilePath();
 
             if (gotCommandlinePath && goBtn.Enabled)
             {
+                exeFilename.Text = commmandlinePath;
                 goBtn_Click(sender, e);
             }
         }
@@ -79,8 +81,8 @@ namespace Guitar
             try
             {
                 autoNewComboboxesItemsInHistory();
-                _config.saveSettings();
-                errorScreen.Text = _config.getFilePath();
+                configurator.saveSettings();
+                errorScreen.Text = configurator.getFilePath();
 
                 cls();
 
