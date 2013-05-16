@@ -1,4 +1,6 @@
 #summary List of project versions
+= Version 1.2.3 =
+  * Tests run automatically when gtest-gbar is run passing the path to the test executable 
 = Version 1.2.2 =
   * Better handling of settings save & load
   * FIX: application would crash without settings
