@@ -22,6 +22,7 @@ namespace Guitar
 
         private string potentialErrorText;
         private int numTests = 0;
+        private int checkNumTests = 0;
         private bool modeCountOnly;
 
         public GoogleTestOutputParser(TestComplete a, LineRead b)
@@ -30,34 +31,41 @@ namespace Guitar
             notifyLineRead = b;
         }
 
-        private void parseLine(String l)
+        private void parseLine(String parsedLine)
         {
             if (modeCountOnly)
             {
-                if (l.StartsWith("  ")) numTests++;
+                if (parsedLine.StartsWith("  ") && parsedLine.Length != 2) numTests++;
             }
             else
             {
-                if (TEST_START.IsMatch(l))
+                if (TEST_START.IsMatch(parsedLine))
                 {
-                    currentTestName = TEST_START.Match(l).Groups[1].Value;
+                    currentTestName = TEST_START.Match(parsedLine).Groups[1].Value;
                     potentialErrorText = "";
                 }
                 else if (currentTestName != null)
                 {
-                    if (l.StartsWith("[       OK ] " + currentTestName))
+                    if (parsedLine.StartsWith("[       OK ] " + currentTestName))
                     {
                         notifyTestComplete(currentTestName, null);
                         currentTestName = null;
                     }
-                    else if (l.StartsWith("[  FAILED  ] " + currentTestName))
+                    else if (parsedLine.StartsWith("[  FAILED  ] " + currentTestName))
                     {
                         notifyTestComplete(currentTestName, potentialErrorText);
                         currentTestName = null;
                     }
-                    else if (!l.StartsWith("["))
+                    else if (!parsedLine.StartsWith("["))
                     {
-                        potentialErrorText += l + "\r\n";
+                        int errorStringIndex = parsedLine.IndexOf(": error:");
+                        if (errorStringIndex != -1)
+                        {
+                            int errorStringStartsAt = errorStringIndex + 8;
+                            parsedLine = parsedLine.Remove(errorStringStartsAt, 1);
+                            parsedLine = parsedLine.Insert(errorStringStartsAt, "\r\n");
+                        }
+                        potentialErrorText += parsedLine + "\r\n";
                     }
                 }
             }

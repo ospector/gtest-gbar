@@ -2,6 +2,7 @@
 using System;
 using System.Windows.Forms;
 using System.Collections.Generic;
+using System.Drawing.Drawing2D;
 namespace ColorProgressBar
 {
     partial class ColorProgressBar
@@ -61,6 +62,8 @@ namespace ColorProgressBar
 
             Graphics g = e.Graphics;
             SolidBrush brush;
+            LinearGradientBrush linGrBrush;
+
             int numberofcolors = progressColorList.Count;
 
             int countGreen = 0;
@@ -83,23 +86,43 @@ namespace ColorProgressBar
             }
             en.Dispose();
             countGray -=  countGreen + countRed;
+
+            linGrBrush = new LinearGradientBrush(
+                   new Point(0, 0),
+                   new Point(0, 24),
+                   Color.LightGreen,  
+                   Color.Green); 
+
+
+            //brush = new SolidBrush(Color.Green);
             
-            brush = new SolidBrush(Color.Green);
             rect.X = 0;
             rect.Width = rectWidth * countGreen;
-            g.FillRectangle(brush, rect);
 
-            brush = new SolidBrush(Color.Red);
+
+            g.FillRectangle(linGrBrush, rect);
+            linGrBrush = new LinearGradientBrush(
+                   new Point(0, 0),
+                   new Point(0, 24),
+                   Color.Red,
+                   Color.DarkRed);
+            //brush = new SolidBrush(Color.Red);
             rect.X = rectWidth * countGreen;
             rect.Width = rectWidth * countRed;
-            g.FillRectangle(brush, rect);
 
-            brush = new SolidBrush(Color.Gray);
+            g.FillRectangle(linGrBrush, rect);
+
+            linGrBrush = new LinearGradientBrush(
+                   new Point(0, 0),
+                   new Point(0, 24),
+                   Color.LightGray,
+                   Color.Gray);
+            //brush = new SolidBrush(Color.Gray);
             rect.X = rectWidth * ( countGreen + countRed );
             rect.Width = rectWidth * countGray;
-            g.FillRectangle(brush, rect);
+            g.FillRectangle(linGrBrush, rect);
             // Clean up.
-            brush.Dispose();
+            linGrBrush.Dispose();
             // Draw a three-dimensional border around the control.
             Draw3DBorder(g);
 
