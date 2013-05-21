@@ -41,6 +41,8 @@ namespace Guitar
             inWindows = (System.Environment.OSVersion.Platform != System.PlatformID.Unix && System.Environment.OSVersion.Platform != System.PlatformID.MacOSX);
             InitializeComponent();
 
+            splitContainer2.Panel1Collapsed = true;
+
             controls = new Dictionary<string, ComboBox>();
             controls.Add(SETTING_GTEST_EXES, exeFilename);
             controls.Add(SETTING_GTEST_PARAMS, clParams);
@@ -65,16 +67,24 @@ namespace Guitar
         {
             configurator.autoloadFromValues();
 
-            goBtn.Enabled = canRun();
-            errorScreen.Text = configurator.getFilePath();
-
-            if (gotCommandlinePath && goBtn.Enabled)
+            if (gotCommandlinePath)
             {
                 exeFilename.Text = commmandlinePath;
+            }
+
+            goBtn.Enabled = canRun();
+            errorScreen3.Text = configurator.getFilePath();
+
+            if (goBtn.Enabled)
+            {
                 goBtn_Click(sender, e);
             }
         }
-       
+        private void saveConfigurationToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            autoNewComboboxesItemsInHistory();
+            configurator.saveSettings();
+        }
         private void goBtn_Click(object sender, EventArgs e)
         {
             int exitCode = 0;
@@ -82,7 +92,7 @@ namespace Guitar
             {
                 autoNewComboboxesItemsInHistory();
                 configurator.saveSettings();
-                errorScreen.Text = configurator.getFilePath();
+                errorScreen3.Text = configurator.getFilePath();
 
                 cls();
 
@@ -106,7 +116,7 @@ namespace Guitar
                 if (monoException)
                 {
                     cls();
-                    errorScreen.Text = "Please Retry, Failure during run due to StreamReader close\n" +
+                    errorScreen3.Text = "Please Retry, Failure during run due to StreamReader close\n" +
                                         "(This is a known issue in Mono on Ubuntu.)";
                 }
                 else
@@ -118,12 +128,12 @@ namespace Guitar
                                      (disabled == 0 ? ". " : ". " + disabled + " are disabled.") +
                                      ". Pass: " + ((progressBar.Value - Failures.Count ) * 100 / progressBar.Value) + "%" ;
                     if (Failures.Count == 0 && exitCode == 0) 
-                        errorScreen.Text = "All is well.";
+                        errorScreen3.Text = "All is well.";
                     else
                     {
                         if (exitCode != 0)
                         {
-                            errorScreen.Text = "Exit code != 0. Maybe an assertion failed.";
+                            errorScreen3.Text = "Exit code != 0. Maybe an assertion failed.";
                         }
                     }
                         
@@ -174,8 +184,8 @@ namespace Guitar
         {
             progressBar.Value = 0;
             failureListBox.Items.Clear();
-            errorScreen.Text = "";
-            errorScreen.Refresh();
+            errorScreen3.Text = "";
+            errorScreen3.Refresh();
         }
 
         private void calibrateProgressBar(int n)
@@ -231,14 +241,6 @@ namespace Guitar
             }
             return cl.ToString();
         }
-
-        
-        
-       
-
-       
-
-        
 
         private void lineRead(string line, bool countStage)
         {
@@ -302,7 +304,7 @@ namespace Guitar
 
         private void failureListBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            errorScreen.Text = Failures[failureListBox.SelectedIndex];
+            errorScreen3.Text = Failures[failureListBox.SelectedIndex];
         }
 
         private void buttonSelectStartupFolder_Click(object sender, EventArgs e)
@@ -356,9 +358,18 @@ namespace Guitar
             MessageBox.Show("Guitar a UI for a Google Test (https://code.google.com/p/gtest-gbar/)", "About");
         }
 
-        private void label6_Click(object sender, EventArgs e)
-        {
 
+
+        private void optionsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            optionsToolStripMenuItem.Checked = splitContainer2.Panel1Collapsed;
+            splitContainer2.Panel1Collapsed = !splitContainer2.Panel1Collapsed;
+            
         }
+
+
+      
+
+        
     }
 }
