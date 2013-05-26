@@ -21,14 +21,16 @@ namespace Guitar
         List<string> Failures = new List< string>();
         private bool inWindows;
         private bool gotCommandlinePath = false;
+        private bool isTestFail = false;
         private String commmandlinePath;
-
+        private bool closeOnEsc;
         private Dictionary<string, ComboBox> controls;
 
         Configurator configurator;
         public GuitarForm()
         {
             initializeForm(); // TODO: find a way to call GuitarForm() from GuitarForm(String fileName)
+            closeOnEsc = false;
         }
 		public GuitarForm(String fileName)
         {
@@ -36,6 +38,24 @@ namespace Guitar
 
             guitarReceivedAPathToATestExecutable();
             setFileNameInputbox(fileName);
+        }
+        public GuitarForm(CommandLineParameters parameters)
+        {
+            initializeForm();
+
+            if (parameters.testFilePath != "")
+            {
+                guitarReceivedAPathToATestExecutable();
+            }
+            setFileNameInputbox(parameters.testFilePath);
+
+            if (parameters.autoCloseTimeout > 0)
+            {
+                formCloseTimer.Enabled = true;
+                formCloseTimer.Interval = parameters.autoCloseTimeout * 1000;
+                formCloseTimer.Tick += new System.EventHandler(formCloseTimer_Tick);
+            }
+            closeOnEsc = parameters.closeOnEsc;
         }
         private void initializeForm(){
             inWindows = (System.Environment.OSVersion.Platform != System.PlatformID.Unix && System.Environment.OSVersion.Platform != System.PlatformID.MacOSX);
@@ -127,12 +147,16 @@ namespace Guitar
                                      " of " + progressBar.Maximum + 
                                      (disabled == 0 ? ". " : ". " + disabled + " are disabled.") +
                                      ". Pass: " + ((progressBar.Value - Failures.Count ) * 100 / progressBar.Value) + "%" ;
-                    if (Failures.Count == 0 && exitCode == 0) 
+                    if (Failures.Count == 0 && exitCode == 0)
+                    {
                         errorScreen3.Text = "All is well.";
+                        isTestFail = false;
+                    }
                     else
                     {
                         if (exitCode != 0)
                         {
+                            isTestFail = true;
                             errorScreen3.Text = "Exit code != 0. Maybe an assertion failed.";
                         }
                     }
@@ -365,6 +389,22 @@ namespace Guitar
             optionsToolStripMenuItem.Checked = splitContainer2.Panel1Collapsed;
             splitContainer2.Panel1Collapsed = !splitContainer2.Panel1Collapsed;
             
+        }
+
+        private void formCloseTimer_Tick(object sender, EventArgs e)
+        {
+            if (!isTestFail)
+            {
+                Close();
+            }
+        }
+
+        private void GuitarForm_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == 27 && closeOnEsc)
+            {
+                Close();
+            }
         }
 
 

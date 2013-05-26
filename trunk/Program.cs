@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text;
 using System.Windows.Forms;
 
 namespace Guitar
@@ -14,15 +15,27 @@ namespace Guitar
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            if (args.Length == 0)
+
+            CommandLineParameters parameters = new CommandLineParameters(args);
+            if (parameters.printHelp)
             {
-                Application.Run(new GuitarForm());
+                StringBuilder message = new StringBuilder();
+                message.AppendLine("Welcome to Guitar!");
+                message.AppendLine("Guitar is a grafic user interface for the Google Testing Framework.");
+                message.AppendLine("Usage: guitar [gtest_file_name | options]");
+                message.AppendLine("  options: ");
+                message.AppendLine("    --help, -h                     displays this message");
+                message.AppendLine("    --close-timeout timeout        The program closes after 'timeout' seconds");
+                message.AppendLine("    --gtest-exe gtest_file_name    Filename of the googletest executable." );
+                message.AppendLine("                                   The path can be both relative or absolute.");
+                Console.WriteLine(message);
+                //TODO : make the work!!! Doesn't displays in the console.
+                return;
             }
-            else
-            {
-                String exeFileName = args[0];
-                Application.Run(new GuitarForm(exeFileName));
-            }
+            Application.Run(new GuitarForm(parameters));
+
+
         }
     }
 }
+

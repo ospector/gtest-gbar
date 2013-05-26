@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(GuitarForm));
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.numFailuresLabel = new System.Windows.Forms.Label();
@@ -62,6 +63,7 @@
             this.aboutGuitarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.optionsPanel = new System.Windows.Forms.Panel();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
+            this.formCloseTimer = new System.Windows.Forms.Timer(this.components);
             this.progressBar = new ColorProgressBar.ColorProgressBar();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -119,9 +121,10 @@
             // goBtn
             // 
             this.goBtn.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
-            this.goBtn.Location = new System.Drawing.Point(321, 202);
+            this.goBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.goBtn.Location = new System.Drawing.Point(302, 187);
             this.goBtn.Name = "goBtn";
-            this.goBtn.Size = new System.Drawing.Size(75, 23);
+            this.goBtn.Size = new System.Drawing.Size(120, 35);
             this.goBtn.TabIndex = 7;
             this.goBtn.Text = "Go";
             this.goBtn.UseVisualStyleBackColor = true;
@@ -134,7 +137,7 @@
             this.lineLabel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.lineLabel.Location = new System.Drawing.Point(6, 30);
             this.lineLabel.Name = "lineLabel";
-            this.lineLabel.Size = new System.Drawing.Size(744, 27);
+            this.lineLabel.Size = new System.Drawing.Size(744, 24);
             this.lineLabel.TabIndex = 2;
             // 
             // label3
@@ -165,7 +168,7 @@
             this.failureListBox.FormattingEnabled = true;
             this.failureListBox.Location = new System.Drawing.Point(4, 6);
             this.failureListBox.Name = "failureListBox";
-            this.failureListBox.Size = new System.Drawing.Size(235, 121);
+            this.failureListBox.Size = new System.Drawing.Size(235, 108);
             this.failureListBox.TabIndex = 8;
             this.failureListBox.SelectedIndexChanged += new System.EventHandler(this.failureListBox_SelectedIndexChanged);
             // 
@@ -270,7 +273,7 @@
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.errorScreen3);
-            this.splitContainer1.Size = new System.Drawing.Size(750, 123);
+            this.splitContainer1.Size = new System.Drawing.Size(750, 111);
             this.splitContainer1.SplitterDistance = 242;
             this.splitContainer1.TabIndex = 17;
             // 
@@ -282,7 +285,7 @@
             this.errorScreen3.Font = new System.Drawing.Font("Courier New", 9.75F);
             this.errorScreen3.Location = new System.Drawing.Point(3, 6);
             this.errorScreen3.Name = "errorScreen3";
-            this.errorScreen3.Size = new System.Drawing.Size(498, 114);
+            this.errorScreen3.Size = new System.Drawing.Size(498, 105);
             this.errorScreen3.TabIndex = 10;
             this.errorScreen3.Text = "";
             this.errorScreen3.WordWrap = false;
@@ -433,6 +436,10 @@
             this.splitContainer2.SplitterDistance = 189;
             this.splitContainer2.TabIndex = 23;
             // 
+            // formCloseTimer
+            // 
+            this.formCloseTimer.Tick += new System.EventHandler(this.formCloseTimer_Tick);
+            // 
             // progressBar
             // 
             this.progressBar.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
@@ -454,10 +461,12 @@
             this.Controls.Add(this.splitContainer2);
             this.Controls.Add(this.menuStrip1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.KeyPreview = true;
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "GuitarForm";
             this.Text = "Guitar 1.2.3 - Google Unit Test Application Runner";
             this.Load += new System.EventHandler(this.GuitarForm_Load);
+            this.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.GuitarForm_KeyPress);
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel2.ResumeLayout(false);
             this.splitContainer1.ResumeLayout(false);
@@ -510,6 +519,7 @@
         private System.Windows.Forms.ToolStripMenuItem optionsToolStripMenuItem;
         private System.Windows.Forms.Panel optionsPanel;
         private System.Windows.Forms.SplitContainer splitContainer2;
+        private System.Windows.Forms.Timer formCloseTimer;
     }
 }
 
