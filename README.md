@@ -8,4 +8,4 @@ Current Version: *1.2.3*
 The project is written in C# and runs on Windows and Linux. Window executable available for download. Linux executable can be easily built using Mono and Mono Develop - link to sources zip is at your right.
 For more detailed information please refer to the [ProjectDetails project details page].
 
-(https://github.com/ospector/gtest-gbar/blob/master/wiki-imgs/smallScreen.png?raw=true)
+![smallscreenshot](https://github.com/ospector/gtest-gbar/blob/master/wiki-imgs/smallScreen.png?raw=true)
