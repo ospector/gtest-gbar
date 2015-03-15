@@ -1,0 +1,5 @@
+# Linux
+
+1. Open a terminal
+2. cd to the directory containing Guitar.sln
+3. In the terminal, run `xbuild Guitar.sln`
