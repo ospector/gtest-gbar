@@ -1,4 +1,4 @@
-This project is an independent addition for [googletest](http://code.google.com/p/googletest/googletest).
+This project is an independent addition for [googletest](https://code.google.com/p/googletest/).
 
  
 Google Test is an excellent xUnit style c++ unit testing framework. It is highly recommended. One (minor) drawback of Google Test is it's text based UI, and this project attempts to help.
