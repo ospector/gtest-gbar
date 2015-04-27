@@ -69,7 +69,7 @@
     <Compile Include="ColorProgressBar.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="ColorProgressBar.designer.cs">
+    <Compile Include="ColorProgressBar.Designer.cs">
       <DependentUpon>ColorProgressBar.cs</DependentUpon>
     </Compile>
     <Compile Include="GoogleTestOutputParser.cs" />
