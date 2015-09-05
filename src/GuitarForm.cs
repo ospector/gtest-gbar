@@ -93,7 +93,7 @@ namespace Guitar
             }
 
             goBtn.Enabled = canRun();
-            errorScreen3.Text = configurator.getFilePath();
+            gtestOutputBox.Text = configurator.getFilePath();
 
             if (goBtn.Enabled)
             {
@@ -108,11 +108,12 @@ namespace Guitar
         private void goBtn_Click(object sender, EventArgs e)
         {
             int exitCode = 0;
+            var content = "";
             try
             {
                 autoNewComboboxesItemsInHistory();
                 configurator.saveSettings();
-                errorScreen3.Text = configurator.getFilePath();
+                gtestOutputBox.Text = configurator.getFilePath();
 
                 cls();
 
@@ -124,7 +125,9 @@ namespace Guitar
                     calibrateProgressBar(parser.countTests(runGtest(true).StandardOutput));
 
                     Process gtestexe = runGtest(false);
-                    parser.parseTests(gtestexe.StandardOutput);
+                    content = gtestexe.StandardOutput.ReadToEnd();
+
+                    parser.parseTests(GenerateStreamFromString(content));
 
                     exitCode = gtestexe.ExitCode;
                 }
@@ -136,7 +139,7 @@ namespace Guitar
                 if (monoException)
                 {
                     cls();
-                    errorScreen3.Text = "Please Retry, Failure during run due to StreamReader close\n" +
+                    gtestOutputBox.Text = "Please Retry, Failure during run due to StreamReader close\n" +
                                         "(This is a known issue in Mono on Ubuntu.)";
                 }
                 else
@@ -149,7 +152,7 @@ namespace Guitar
                                      ". Pass: " + ((progressBar.Value - Failures.Count ) * 100 / progressBar.Value) + "%" ;
                     if (Failures.Count == 0 && exitCode == 0)
                     {
-                        errorScreen3.Text = "All is well.";
+                        gtestOutputBox.Text = content;
                         isTestFail = false;
                     }
                     else
@@ -157,25 +160,30 @@ namespace Guitar
                         if (exitCode != 0)
                         {
                             isTestFail = true;
-                            errorScreen3.Text = "Exit code != 0. Maybe an assertion failed.";
+                            gtestOutputBox.Text = content;
                         }
                     }
                         
                 }
+                scrollGtestOutput();
                 goBtn.Enabled = canRun();
             }
-            catch (System.Exception ex)
+            catch (Exception ex)
             {
                 MessageBox.Show(ex.ToString());
             }
         }
+
+        private void scrollGtestOutput()
+        {
+            gtestOutputBox.SelectionStart = gtestOutputBox.Text.Length;
+            gtestOutputBox.ScrollToCaret();
+        }
+
         private void autoNewComboboxesItemsInHistory()
         {
-            Dictionary<string, ComboBox>.Enumerator en = controls.GetEnumerator();
-            while (en.MoveNext())
-            {
-                putNewItemOnHistorysTop(en.Current.Value);
-            }
+            foreach (var control in controls)
+                putNewItemOnHistorysTop(control.Value);
         }
 
         private void putNewItemOnHistorysTop(ComboBox cb)
@@ -183,7 +191,7 @@ namespace Guitar
             // Is this an old item selection or a new item
             string selText = cb.Text;
 
-            Boolean isNew = !cb.Items.Contains(selText);
+            bool isNew = !cb.Items.Contains(selText);
             if (!isNew)
             {
                 // remove older reference to same file
@@ -208,8 +216,8 @@ namespace Guitar
         {
             progressBar.Value = 0;
             failureListBox.Items.Clear();
-            errorScreen3.Text = "";
-            errorScreen3.Refresh();
+            gtestOutputBox.Text = "";
+            gtestOutputBox.Refresh();
         }
 
         private void calibrateProgressBar(int n)
@@ -328,7 +336,7 @@ namespace Guitar
 
         private void failureListBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            errorScreen3.Text = Failures[failureListBox.SelectedIndex];
+            gtestOutputBox.Text = Failures[failureListBox.SelectedIndex];
         }
 
         private void buttonSelectStartupFolder_Click(object sender, EventArgs e)
@@ -407,9 +415,17 @@ namespace Guitar
             }
         }
 
+        public StreamReader GenerateStreamFromString(string s)
+        {
+            MemoryStream stream = new MemoryStream();
+            StreamWriter writer = new StreamWriter(stream);
+            writer.Write(s);
+            writer.Flush();
+            stream.Position = 0;
+            return new StreamReader(stream);
+        }
 
-      
 
-        
+
     }
 }

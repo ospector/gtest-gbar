@@ -49,7 +49,7 @@
             this.filter = new System.Windows.Forms.ComboBox();
             this.hideConsole = new System.Windows.Forms.CheckBox();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.errorScreen3 = new System.Windows.Forms.RichTextBox();
+            this.gtestOutputBox = new System.Windows.Forms.RichTextBox();
             this.label6 = new System.Windows.Forms.Label();
             this.startupFolder = new System.Windows.Forms.ComboBox();
             this.buttonSelectStartupFolder = new System.Windows.Forms.Button();
@@ -63,8 +63,8 @@
             this.aboutGuitarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.optionsPanel = new System.Windows.Forms.Panel();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
-            this.formCloseTimer = new System.Windows.Forms.Timer(this.components);
             this.progressBar = new ColorProgressBar.ColorProgressBar();
+            this.formCloseTimer = new System.Windows.Forms.Timer(this.components);
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
@@ -272,23 +272,23 @@
             // 
             // splitContainer1.Panel2
             // 
-            this.splitContainer1.Panel2.Controls.Add(this.errorScreen3);
+            this.splitContainer1.Panel2.Controls.Add(this.gtestOutputBox);
             this.splitContainer1.Size = new System.Drawing.Size(750, 111);
             this.splitContainer1.SplitterDistance = 242;
             this.splitContainer1.TabIndex = 17;
             // 
-            // errorScreen3
+            // gtestOutputBox
             // 
-            this.errorScreen3.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.gtestOutputBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.errorScreen3.Font = new System.Drawing.Font("Courier New", 9.75F);
-            this.errorScreen3.Location = new System.Drawing.Point(3, 6);
-            this.errorScreen3.Name = "errorScreen3";
-            this.errorScreen3.Size = new System.Drawing.Size(498, 105);
-            this.errorScreen3.TabIndex = 10;
-            this.errorScreen3.Text = "";
-            this.errorScreen3.WordWrap = false;
+            this.gtestOutputBox.Font = new System.Drawing.Font("Courier New", 9.75F);
+            this.gtestOutputBox.Location = new System.Drawing.Point(3, 6);
+            this.gtestOutputBox.Name = "gtestOutputBox";
+            this.gtestOutputBox.Size = new System.Drawing.Size(498, 105);
+            this.gtestOutputBox.TabIndex = 10;
+            this.gtestOutputBox.Text = "";
+            this.gtestOutputBox.WordWrap = false;
             // 
             // label6
             // 
@@ -344,14 +344,14 @@
             // 
             this.saveConfigurationToolStripMenuItem.Name = "saveConfigurationToolStripMenuItem";
             this.saveConfigurationToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
-            this.saveConfigurationToolStripMenuItem.Size = new System.Drawing.Size(224, 22);
+            this.saveConfigurationToolStripMenuItem.Size = new System.Drawing.Size(215, 22);
             this.saveConfigurationToolStripMenuItem.Text = "Save Configuration";
             this.saveConfigurationToolStripMenuItem.Click += new System.EventHandler(this.saveConfigurationToolStripMenuItem_Click);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(224, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(215, 22);
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
@@ -368,7 +368,7 @@
             this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
             this.optionsToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
             | System.Windows.Forms.Keys.O)));
-            this.optionsToolStripMenuItem.Size = new System.Drawing.Size(252, 22);
+            this.optionsToolStripMenuItem.Size = new System.Drawing.Size(223, 22);
             this.optionsToolStripMenuItem.Text = "Options Panel";
             this.optionsToolStripMenuItem.Click += new System.EventHandler(this.optionsToolStripMenuItem_Click);
             // 
@@ -436,10 +436,6 @@
             this.splitContainer2.SplitterDistance = 189;
             this.splitContainer2.TabIndex = 23;
             // 
-            // formCloseTimer
-            // 
-            this.formCloseTimer.Tick += new System.EventHandler(this.formCloseTimer_Tick);
-            // 
             // progressBar
             // 
             this.progressBar.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
@@ -452,6 +448,10 @@
             this.progressBar.Size = new System.Drawing.Size(743, 24);
             this.progressBar.TabIndex = 3;
             this.progressBar.Value = 0;
+            // 
+            // formCloseTimer
+            // 
+            this.formCloseTimer.Tick += new System.EventHandler(this.formCloseTimer_Tick);
             // 
             // GuitarForm
             // 
@@ -513,7 +513,7 @@
         private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem aboutGuitarToolStripMenuItem;
-        private System.Windows.Forms.RichTextBox errorScreen3;
+        private System.Windows.Forms.RichTextBox gtestOutputBox;
         private System.Windows.Forms.ToolStripMenuItem saveConfigurationToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem viewToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem optionsToolStripMenuItem;
