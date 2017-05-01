@@ -13,6 +13,14 @@ namespace ColorProgressBar
         public ColorProgressBar()
         {
             InitializeComponent();
+            InitializeListColor();
+        }
+
+
+        List<Color> progressColorList;
+        private void InitializeListColor()
+        {
+            progressColorList = new List<Color>();
         }
     }
 }
