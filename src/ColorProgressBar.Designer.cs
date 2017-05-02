@@ -35,16 +35,21 @@ namespace ColorProgressBar
         {
             components = new System.ComponentModel.Container();
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            progressColorList = new List<Color>();
+
+            // Designer Error: in Visual Studio editor, 
+            //   Generic.List cannot be called from InitializeComponent()
+            //   move to it's own private method and call after InitializeComponent
+            //   in ColorProgressBar.cs
+            //progressColorList = new List<Color>();
         }
 
         #endregion
 
         int min = 0;	// Minimum value for progress range
         int max = 100;	// Maximum value for progress range
-        int val = 0;		// Current progress
-  //      Color BarColor = Color.Blue;		// Color of progress meter
-        List<Color> progressColorList;
+        int val = 0;    // Current progress
+        //Color BarColor = Color.Blue;		// Color of progress meter
+        //List<Color> progressColorList;    // moved to ColorProgressBar.cs InitializeListColor
 
         protected override void OnResize(EventArgs e)
         {
@@ -263,7 +268,7 @@ namespace ColorProgressBar
 
             set
             {
-       //         BarColor = value;
+                //BarColor = value;
                 progressColorList.Add(value);
 
                 // Invalidate the control to get a repaint.
