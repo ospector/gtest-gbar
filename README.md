@@ -1,6 +1,6 @@
-This project is an independent addition for [googletest](https://code.google.com/p/googletest/).
+# gtest-gbar
+_This project is an independent addition for [googletest](https://code.google.com/p/googletest/)._
 
- 
 Google Test is an excellent xUnit style c++ unit testing framework. It is highly recommended. One (minor) drawback of Google Test is it's text based UI, and this project attempts to help.
 
 Current Version: *1.2.3* [details](https://github.com/ospector/gtest-gbar/wiki/Version-History) 
